@@ -1,14 +1,107 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0" version="24.7.17">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0" version="24.7.17">
   <diagram name="Page-1" id="sR9vDAPjYI0efpi9fWrZ">
-    <mxGraphModel dx="794" dy="422" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="794" dy="422" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="950" pageHeight="2500" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="drzvohh7pGaHmE2DIv6W-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="drzvohh7pGaHmE2DIv6W-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="350" y="190" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="drzvohh7pGaHmE2DIv6W-2" value="&lt;div&gt;RH&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="drzvohh7pGaHmE2DIv6W-2" value="&lt;div&gt;Funcionario&lt;/div&gt;&lt;div&gt;RH&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="380" y="205" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-6" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="270" as="sourcePoint" />
+            <mxPoint x="409.5" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-9" value="&lt;div&gt;Cadastra&lt;/div&gt;&lt;div&gt;funcionarios&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-10" value="&lt;div&gt;Atualiza os dados&lt;/div&gt;&lt;div&gt;do funcionario&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-11" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="450" as="sourcePoint" />
+            <mxPoint x="409.5" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-13" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="620" as="sourcePoint" />
+            <mxPoint x="409.5" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-14" value="Visualiza&lt;br&gt;&lt;div&gt;os pontos&amp;nbsp;&lt;/div&gt;&lt;div&gt;registrados&lt;br&gt;&lt;/div&gt;&lt;div&gt;(entrada e saida)&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="740" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-16" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="860" as="sourcePoint" />
+            <mxPoint x="409.5" y="930" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-18" value="&lt;div&gt;Solicita os beneficios&lt;/div&gt;&lt;div&gt;de um funcionario&lt;/div&gt;&lt;div&gt;(em caso de mudança de cargo, etc..)&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="1110" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-19" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="1200" as="sourcePoint" />
+            <mxPoint x="409.5" y="1270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-20" value="&lt;div&gt;Visualiza os&lt;/div&gt;&lt;div&gt;beneficios de cada&lt;/div&gt;&lt;div&gt;funcionario&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="1280" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-21" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="1380" as="sourcePoint" />
+            <mxPoint x="409.5" y="1450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-22" value="&lt;div&gt;Inscreve os funcionarios&lt;/div&gt;&lt;div&gt;em treinamentos&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="1490" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-23" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="1620" as="sourcePoint" />
+            <mxPoint x="409.5" y="1690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-24" value="&lt;div&gt;avalia o desempenho&lt;/div&gt;&lt;div&gt;do funcionario&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="1740" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-25" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="1850" as="sourcePoint" />
+            <mxPoint x="409.5" y="1920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-26" value="&lt;div&gt;Consulta as avaliaçoes&lt;/div&gt;&lt;div&gt;de desempenho cada funcionario&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="1950" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-27" value="Funcionario" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-28" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="639.5" y="270" as="sourcePoint" />
+            <mxPoint x="639.5" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-29" value="&lt;div&gt;Registra o ponto&lt;/div&gt;(entrada e saida)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="370" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-30" value="Cadastra os benficios de cada funcionario" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="950" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZseKn99tyQhg3UU6D9tp-31" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="409.5" y="1030" as="sourcePoint" />
+            <mxPoint x="409.5" y="1100" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
