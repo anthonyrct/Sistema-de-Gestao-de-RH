@@ -7,7 +7,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String role; // o role sera usado para ver se o usuario será, gerente ou funcionario
+    private String role; // o role será usado para ver se o usuario será do RH ou funcionario normal
 
     // Construtores
     public Usuario() {
