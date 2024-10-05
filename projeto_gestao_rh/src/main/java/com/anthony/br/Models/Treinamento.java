@@ -1,21 +1,37 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "treinamentos")
 public class Treinamento {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String titulo;
+
+    @Column(nullable = false)
     private String descricao;
+
+    @Column(name = "data_inicio", nullable = false)
     private Date dataInicio;
+
+    @Column(name = "data_fim", nullable = false)
     private Date dataFim;
+
+    @Column(nullable = false)
     private int cargaHoraria;
 
     // Construtores
     public Treinamento() {
     }
 
-    public Treinamento(int id, String titulo, String descricao, Date dataInicio, Date dataFim, int cargaHoraria) {
+    public Treinamento(Long id, String titulo, String descricao, Date dataInicio, Date dataFim, int cargaHoraria) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -25,11 +41,11 @@ public class Treinamento {
     }
 
     // Getters e Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,8 +92,8 @@ public class Treinamento {
     // toString
     @Override
     public String toString() {
-        return "Treinamento{id=" + id + ", titulo='" + titulo + "', descricao='" + descricao +
-                "', dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", cargaHoraria=" + cargaHoraria + "}";
+        return "Treinamento{id=" + id + ", titulo='" + titulo + "', descricao='" + descricao + "', dataInicio=" + dataInicio +
+               ", dataFim=" + dataFim + ", cargaHoraria=" + cargaHoraria + "}";
     }
 
     // equals
@@ -88,9 +104,9 @@ public class Treinamento {
         if (o == null || getClass() != o.getClass())
             return false;
         Treinamento that = (Treinamento) o;
-        return id == that.id && cargaHoraria == that.cargaHoraria && Objects.equals(titulo, that.titulo) &&
-                Objects.equals(descricao, that.descricao) && Objects.equals(dataInicio, that.dataInicio) &&
-                Objects.equals(dataFim, that.dataFim);
+        return cargaHoraria == that.cargaHoraria && Objects.equals(id, that.id) && Objects.equals(titulo, that.titulo) &&
+               Objects.equals(descricao, that.descricao) && Objects.equals(dataInicio, that.dataInicio) &&
+               Objects.equals(dataFim, that.dataFim);
     }
 
     // hashCode

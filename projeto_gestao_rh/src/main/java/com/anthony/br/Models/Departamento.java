@@ -1,8 +1,10 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "departamentos")
 public class Departamento {
 
     @Id
@@ -12,7 +14,7 @@ public class Departamento {
     @Column(nullable = false, unique = true)
     private String nome;
 
-    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Funcionario> funcionarios;
 
     // Construtor padrão

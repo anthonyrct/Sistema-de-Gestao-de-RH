@@ -1,8 +1,10 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "cargos")
 public class Cargo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +16,7 @@ public class Cargo {
     @Column(nullable = false)
     private Double salarioBase;
 
-    @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Funcionario> funcionarios;
 
     // Construtor padrão

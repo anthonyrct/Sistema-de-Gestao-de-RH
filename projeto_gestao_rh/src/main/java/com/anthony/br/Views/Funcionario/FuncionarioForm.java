@@ -1,4 +1,4 @@
-package main.java.com.anthony.br.Views.Funcionario;
+package com.anthony.br.Views.Funcionario;
 
 import javax.swing.JPanel;
 import javax.swing.*;

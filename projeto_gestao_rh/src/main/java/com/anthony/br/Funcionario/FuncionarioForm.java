@@ -1,9 +1,8 @@
-package main.java.com.anthony.br.Funcionario;
+package com.anthony.br.Funcionario;
 
 import javax.swing.*;
-
-import main.java.com.anthony.br.Controllers.FuncionarioController;
-import main.java.com.anthony.br.Models.Funcionario;
+import com.anthony.br.Controllers.FuncionarioController;
+import com.anthony.br.Models.Funcionario;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,39 +54,44 @@ public class FuncionarioForm extends JPanel {
                 String telefone = telefoneField.getText();
                 String cargo = cargoField.getText();
                 String departamento = departamentoField.getText();
-                double salario = Double.parseDouble(salarioField.getText());
+                double salario;
 
                 // Validação básica
-                if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty()) {
+                if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty() || 
+                    cargo.isEmpty() || departamento.isEmpty() || salarioField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(FuncionarioForm.this, "Todos os campos devem ser preenchidos.");
                     return;
                 }
 
-                // Criar uma instância do Funcionario com os dados do formulário
-                Funcionario funcionario = new Funcionario(nome, cpf, endereco, telefone, cargo, departamento, salario);
-
-                // Chamar o controller para salvar o funcionário
                 try {
+                    salario = Double.parseDouble(salarioField.getText());
+
+                    // Criar uma instância do Funcionario com os dados do formulário
+                    Funcionario funcionario = new Funcionario(nome, cpf, endereco, telefone, cargo, departamento, salario);
+
+                    // Chamar o controller para salvar o funcionário
                     FuncionarioController funcionarioController = new FuncionarioController();
                     funcionarioController.salvarFuncionario(funcionario);
                     JOptionPane.showMessageDialog(FuncionarioForm.this, "Funcionário salvo com sucesso!");
                     limparCampos();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(FuncionarioForm.this, "O salário deve ser um número válido.");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(FuncionarioForm.this,
                             "Erro ao salvar o funcionário: " + ex.getMessage());
                 }
             }
-
-            private void limparCampos() {
-                nomeField.setText("");
-                cpfField.setText("");
-                enderecoField.setText("");
-                telefoneField.setText("");
-                cargoField.setText("");
-                departamentoField.setText("");
-                salarioField.setText("");
-            }
         });
         add(salvarButton);
+    }
+
+    private void limparCampos() {
+        nomeField.setText("");
+        cpfField.setText("");
+        enderecoField.setText("");
+        telefoneField.setText("");
+        cargoField.setText("");
+        departamentoField.setText("");
+        salarioField.setText("");
     }
 }

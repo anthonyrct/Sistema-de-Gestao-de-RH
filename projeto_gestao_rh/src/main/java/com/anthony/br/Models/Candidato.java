@@ -1,12 +1,25 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "candidatos")
 public class Candidato {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String telefone;
+
+    @Column(nullable = false)
     private String curriculo;
 
     // Construtores

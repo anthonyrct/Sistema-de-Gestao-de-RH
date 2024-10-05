@@ -1,19 +1,31 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "relatorios")
 public class Relatorio {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "tipo_relatorio", nullable = false)
     private String tipoRelatorio; // Ex: desempenho, horas trabalhadas, etc.
+
+    @Column(nullable = false)
     private String conteudo;
+
+    @Column(name = "data_geracao", nullable = false)
     private Date dataGeracao;
 
     // Construtores
     public Relatorio() {
     }
 
-    public Relatorio(int id, String tipoRelatorio, String conteudo, Date dataGeracao) {
+    public Relatorio(Long id, String tipoRelatorio, String conteudo, Date dataGeracao) {
         this.id = id;
         this.tipoRelatorio = tipoRelatorio;
         this.conteudo = conteudo;
@@ -21,11 +33,11 @@ public class Relatorio {
     }
 
     // Getters e Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,7 +79,7 @@ public class Relatorio {
         if (o == null || getClass() != o.getClass())
             return false;
         Relatorio relatorio = (Relatorio) o;
-        return id == relatorio.id && Objects.equals(tipoRelatorio, relatorio.tipoRelatorio)
+        return Objects.equals(id, relatorio.id) && Objects.equals(tipoRelatorio, relatorio.tipoRelatorio)
                 && Objects.equals(conteudo, relatorio.conteudo) && Objects.equals(dataGeracao, relatorio.dataGeracao);
     }
 

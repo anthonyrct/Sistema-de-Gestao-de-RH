@@ -1,8 +1,10 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "beneficios")
 public class Beneficio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +14,11 @@ public class Beneficio {
     private String nome;
 
     @ManyToMany
-    @JoinTable(name = "funcionarios_beneficios", joinColumns = @JoinColumn(name = "beneficio_id"), inverseJoinColumns = @JoinColumn(name = "funcionario_id"))
+    @JoinTable(
+        name = "funcionarios_beneficios",
+        joinColumns = @JoinColumn(name = "beneficio_id"),
+        inverseJoinColumns = @JoinColumn(name = "funcionario_id")
+    )
     private List<Funcionario> funcionarios;
 
     // Construtor padrão

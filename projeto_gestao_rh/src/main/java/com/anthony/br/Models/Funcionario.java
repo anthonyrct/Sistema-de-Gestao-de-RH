@@ -1,13 +1,13 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
 import java.time.LocalDate;
 import javax.persistence.*;
-import javax.annotation.processing.Generated;
 
 @Entity
 @Table(name = "funcionarios")
 public class Funcionario {
-    // atibutos
+
+    // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,16 +33,29 @@ public class Funcionario {
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    // Construtor vazio
+    @Column(nullable = true) // Atributo opcional
+    private String endereco;
+
+    @Column(nullable = true) // Atributo opcional
+    private String telefone;
+
+    @Column(nullable = true) // Atributo opcional
+    private String contaBancaria;
+
+    @Column(nullable = true) // Atributo opcional
+    private String beneficios;
+
+    // Construtor vazio (necessário para JPA)
     public Funcionario() {
     }
 
-    // Construtor cheio
+    // Construtor completo
     public Funcionario(String nome, String cpf, String cargo, Double salario, LocalDate dataContratacao,
-            String departamento, LocalDate dataNascimento, String email) {
+            String departamento, LocalDate dataNascimento, String email, String endereco,
+            String telefone, String contaBancaria, String beneficios) {
         this.nome = nome;
         this.cpf = cpf;
         this.cargo = cargo;
@@ -51,6 +64,10 @@ public class Funcionario {
         this.departamento = departamento;
         this.dataNascimento = dataNascimento;
         this.email = email;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.contaBancaria = contaBancaria;
+        this.beneficios = beneficios;
     }
 
     // Getters e Setters
@@ -126,4 +143,55 @@ public class Funcionario {
         this.email = email;
     }
 
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getContaBancaria() {
+        return contaBancaria;
+    }
+
+    public void setContaBancaria(String contaBancaria) {
+        this.contaBancaria = contaBancaria;
+    }
+
+    public String getBeneficios() {
+        return beneficios;
+    }
+
+    public void setBeneficios(String beneficios) {
+        this.beneficios = beneficios;
+    }
+
+    // Métodos adicionais, caso necessário
+    @Override
+    public String toString() {
+        return "Funcionario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", cargo='" + cargo + '\'' +
+                ", salario=" + salario +
+                ", dataContratacao=" + dataContratacao +
+                ", departamento='" + departamento + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", email='" + email + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", contaBancaria='" + contaBancaria + '\'' +
+                ", beneficios='" + beneficios + '\'' +
+                '}';
+    }
 }

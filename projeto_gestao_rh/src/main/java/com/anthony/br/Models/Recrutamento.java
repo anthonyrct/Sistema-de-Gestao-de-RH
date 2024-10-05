@@ -1,15 +1,29 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "recrutamentos")
 public class Recrutamento {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String vaga;
+
+    @Column(name = "data_abertura", nullable = false)
     private Date dataAbertura;
+
+    @Column(name = "data_fechamento")
     private Date dataFechamento;
+
+    @OneToMany(mappedBy = "recrutamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Candidato> candidatos;
 
     // Construtores
@@ -17,7 +31,7 @@ public class Recrutamento {
         this.candidatos = new ArrayList<>();
     }
 
-    public Recrutamento(int id, String vaga, Date dataAbertura, Date dataFechamento, List<Candidato> candidatos) {
+    public Recrutamento(Long id, String vaga, Date dataAbertura, Date dataFechamento, List<Candidato> candidatos) {
         this.id = id;
         this.vaga = vaga;
         this.dataAbertura = dataAbertura;
@@ -26,11 +40,11 @@ public class Recrutamento {
     }
 
     // Getters e Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,7 +95,7 @@ public class Recrutamento {
         if (o == null || getClass() != o.getClass())
             return false;
         Recrutamento that = (Recrutamento) o;
-        return id == that.id && Objects.equals(vaga, that.vaga) &&
+        return Objects.equals(id, that.id) && Objects.equals(vaga, that.vaga) &&
                 Objects.equals(dataAbertura, that.dataAbertura) &&
                 Objects.equals(dataFechamento, that.dataFechamento) &&
                 Objects.equals(candidatos, that.candidatos);

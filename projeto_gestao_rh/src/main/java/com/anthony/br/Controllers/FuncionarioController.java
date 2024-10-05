@@ -1,11 +1,11 @@
-package main.java.com.anthony.br.Controllers;
+package com.anthony.br.Controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import main.java.com.anthony.br.Models.Funcionario;
+import com.anthony.br.Models.Funcionario;
 
 public class FuncionarioController {
     private List<Funcionario> funcionarios = new ArrayList<>();
@@ -14,9 +14,9 @@ public class FuncionarioController {
         funcionarios.add(funcionario);
     }
 
-    public void atualizarFuncionario(int id, Funcionario funcionarioAtualizado) {
+    public void atualizarFuncionario(Long id, Funcionario funcionarioAtualizado) {
         for (Funcionario funcionario : funcionarios) {
-            if (funcionario.getId() == id) {
+            if (funcionario.getId().equals(id)) {
                 funcionario.setNome(funcionarioAtualizado.getNome());
                 funcionario.setCpf(funcionarioAtualizado.getCpf());
                 funcionario.setEndereco(funcionarioAtualizado.getEndereco());
@@ -24,7 +24,9 @@ public class FuncionarioController {
                 funcionario.setCargo(funcionarioAtualizado.getCargo());
                 funcionario.setDepartamento(funcionarioAtualizado.getDepartamento());
                 funcionario.setSalario(funcionarioAtualizado.getSalario());
-                funcionario.setDataAdmissao(funcionarioAtualizado.getDataAdmissao());
+                funcionario.setDataContratacao(funcionarioAtualizado.getDataContratacao());
+                funcionario.setDataNascimento(funcionarioAtualizado.getDataNascimento());
+                funcionario.setEmail(funcionarioAtualizado.getEmail());
                 funcionario.setContaBancaria(funcionarioAtualizado.getContaBancaria());
                 funcionario.setBeneficios(funcionarioAtualizado.getBeneficios());
                 break;
@@ -45,13 +47,13 @@ public class FuncionarioController {
     }
 
     public List<Funcionario> filtrarPorTempoServico(int anos) {
-        Date hoje = new Date();
+        LocalDate hoje = LocalDate.now();
         return funcionarios.stream()
-                .filter(f -> (hoje.getTime() - f.getDataAdmissao().getTime()) / (1000 * 60 * 60 * 24 * 365) > anos)
+                .filter(f -> f.getDataContratacao().isBefore(hoje.minusYears(anos)))
                 .collect(Collectors.toList());
     }
 
-    public void desativarFuncionario(int id) {
-        funcionarios.removeIf(f -> f.getId() == id);
+    public void desativarFuncionario(Long id) {
+        funcionarios.removeIf(f -> f.getId().equals(id));
     }
 }

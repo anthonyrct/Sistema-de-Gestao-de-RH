@@ -1,19 +1,33 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String senha;
+
+    @Column(nullable = false)
     private String role; // o role será usado para ver se o usuario será do RH ou funcionario normal
 
     // Construtores
     public Usuario() {
     }
 
-    public Usuario(int id, String nome, String email, String senha, String role) {
+    public Usuario(Long id, String nome, String email, String senha, String role) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -22,11 +36,11 @@ public class Usuario {
     }
 
     // Getters e Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,8 +90,8 @@ public class Usuario {
         if (o == null || getClass() != o.getClass())
             return false;
         Usuario usuario = (Usuario) o;
-        return id == usuario.id && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email)
-                && Objects.equals(role, usuario.role);
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) 
+               && Objects.equals(email, usuario.email) && Objects.equals(role, usuario.role);
     }
 
     // hashCode

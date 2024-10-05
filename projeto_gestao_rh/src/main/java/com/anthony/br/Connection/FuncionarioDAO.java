@@ -1,10 +1,10 @@
-package main.java.com.anthony.br.Connection;
-
-import main.java.com.anthony.br.Models.Funcionario;
+package com.anthony.br.Connection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.com.anthony.br.Models.Funcionario;
 
 public class FuncionarioDAO {
     private final String url = "jdbc:postgresql://localhost:5432/seu_banco_de_dados"; // Ajuste o nome do seu banco

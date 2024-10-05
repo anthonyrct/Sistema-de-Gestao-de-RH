@@ -1,19 +1,33 @@
-package main.java.com.anthony.br.Models;
+package com.anthony.br.Models;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "pontos_eletricos")
 public class PontoEletrico {
-    private int id;
-    private int funcionarioId; // ID do funcionário que registrou o ponto
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "funcionario_id", nullable = false)
+    private Long funcionarioId; // ID do funcionário que registrou o ponto
+
+    @Column(name = "data_registro", nullable = false)
     private Date dataRegistro;
+
+    @Column(name = "hora_entrada", nullable = false)
     private Date horaEntrada;
+
+    @Column(name = "hora_saida", nullable = false)
     private Date horaSaida;
 
     // Construtores
-    public PontoEletronico() {}
+    public PontoEletrico() {}
 
-    public PontoEletronico(int id, int funcionarioId, Date dataRegistro, Date horaEntrada, Date horaSaida) {
+    public PontoEletrico(Long id, Long funcionarioId, Date dataRegistro, Date horaEntrada, Date horaSaida) {
         this.id = id;
         this.funcionarioId = funcionarioId;
         this.dataRegistro = dataRegistro;
@@ -22,19 +36,19 @@ public class PontoEletrico {
     }
 
     // Getters e Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getFuncionarioId() {
+    public Long getFuncionarioId() {
         return funcionarioId;
     }
 
-    public void setFuncionarioId(int funcionarioId) {
+    public void setFuncionarioId(Long funcionarioId) {
         this.funcionarioId = funcionarioId;
     }
 
@@ -65,7 +79,7 @@ public class PontoEletrico {
     // toString
     @Override
     public String toString() {
-        return "PontoEletronico{" +
+        return "PontoEletrico{" +
                 "id=" + id +
                 ", funcionarioId=" + funcionarioId +
                 ", dataRegistro=" + dataRegistro +
@@ -81,9 +95,9 @@ public class PontoEletrico {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        PontoEletronico that = (PontoEletronico) o;
-        return id == that.id &&
-                funcionarioId == that.funcionarioId &&
+        PontoEletrico that = (PontoEletrico) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(funcionarioId, that.funcionarioId) &&
                 Objects.equals(dataRegistro, that.dataRegistro) &&
                 Objects.equals(horaEntrada, that.horaEntrada) &&
                 Objects.equals(horaSaida, that.horaSaida);

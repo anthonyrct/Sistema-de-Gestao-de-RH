@@ -1,4 +1,4 @@
-package main.java.com.anthony.br.Connection;
+package com.anthony.br.Connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
