@@ -1,17 +1,36 @@
 package com.anthony.br.Controllers;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.anthony.br.Connection.FuncionarioDAO;
 import com.anthony.br.Models.Funcionario;
 
 public class FuncionarioController {
+
+    private FuncionarioDAO funcionarioDAO;
+
+    public FuncionarioController() {
+        this.funcionarioDAO = new FuncionarioDAO();
+    }
+
     private List<Funcionario> funcionarios = new ArrayList<>();
 
     public void cadastrarFuncionario(Funcionario funcionario) {
-        funcionarios.add(funcionario);
+        try {
+            funcionarioDAO.salvarFuncionario(funcionario);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para listar funcionários
+    public List<Funcionario> listarFuncionarios() {
+        
+        return funcionarioDAO.listarFuncionarios();
     }
 
     public void atualizarFuncionario(Long id, Funcionario funcionarioAtualizado) {

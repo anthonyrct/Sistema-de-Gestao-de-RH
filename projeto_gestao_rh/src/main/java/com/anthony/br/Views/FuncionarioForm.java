@@ -1,4 +1,4 @@
-package com.anthony.br.Funcionario;
+package com.anthony.br.Views;
 
 import javax.swing.*;
 import com.anthony.br.Controllers.FuncionarioController;
@@ -7,12 +7,18 @@ import com.anthony.br.Models.Funcionario;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class FuncionarioForm extends JPanel {
-    private JTextField nomeField, cpfField, enderecoField, telefoneField, cargoField, departamentoField, salarioField;
-    private JButton salvarButton;
+    private JTextField nomeField, cpfField, enderecoField, telefoneField, cargoField, departamentoField, salarioField,
+            dataContratacaoField, dataNascimentoField;
+    private JButton cadastrarButton;
+    private FuncionarioTable funcionarioTable; // Referência à tabela de funcionários
 
-    public FuncionarioForm() {
+    // Construtor que aceita uma instância de FuncionarioTable
+    public FuncionarioForm(FuncionarioTable funcionarioTable) {
+        this.funcionarioTable = funcionarioTable; // Armazena a referência
+
         setLayout(new GridLayout(0, 2));
 
         add(new JLabel("Nome:"));
@@ -43,11 +49,18 @@ public class FuncionarioForm extends JPanel {
         salarioField = new JTextField();
         add(salarioField);
 
-        salvarButton = new JButton("Salvar");
-        salvarButton.addActionListener(new ActionListener() {
+        add(new JLabel("Data de Contratação:"));
+        dataContratacaoField = new JTextField();
+        add(dataContratacaoField);
+
+        add(new JLabel("Data de Nascimento:"));
+        dataNascimentoField = new JTextField();
+        add(dataNascimentoField);
+
+        cadastrarButton = new JButton("Cadastrar");
+        cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Implementar lógica para salvar o funcionário
                 String nome = nomeField.getText();
                 String cpf = cpfField.getText();
                 String endereco = enderecoField.getText();
@@ -55,34 +68,43 @@ public class FuncionarioForm extends JPanel {
                 String cargo = cargoField.getText();
                 String departamento = departamentoField.getText();
                 double salario;
+                LocalDate dataContratacao;
+                LocalDate dataNascimento;
 
                 // Validação básica
-                if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty() || 
-                    cargo.isEmpty() || departamento.isEmpty() || salarioField.getText().isEmpty()) {
+                if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty() ||
+                        cargo.isEmpty() || departamento.isEmpty() || salarioField.getText().isEmpty() ||
+                        dataContratacaoField.getText().isEmpty() || dataNascimentoField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(FuncionarioForm.this, "Todos os campos devem ser preenchidos.");
                     return;
                 }
 
                 try {
                     salario = Double.parseDouble(salarioField.getText());
+                    dataContratacao = LocalDate.parse(dataContratacaoField.getText());
+                    dataNascimento = LocalDate.parse(dataNascimentoField.getText());
 
                     // Criar uma instância do Funcionario com os dados do formulário
-                    Funcionario funcionario = new Funcionario(nome, cpf, endereco, telefone, cargo, departamento, salario);
+                    Funcionario funcionario = new Funcionario(nome, cpf, cargo, salario, dataContratacao, departamento, dataNascimento, cpf, endereco, telefone, "", "");
 
                     // Chamar o controller para salvar o funcionário
                     FuncionarioController funcionarioController = new FuncionarioController();
-                    funcionarioController.salvarFuncionario(funcionario);
-                    JOptionPane.showMessageDialog(FuncionarioForm.this, "Funcionário salvo com sucesso!");
+                    funcionarioController.cadastrarFuncionario(funcionario);
+                    JOptionPane.showMessageDialog(FuncionarioForm.this, "Funcionário cadastrado com sucesso!");
+
+                    // Atualiza a tabela após o cadastro
+                    funcionarioTable.atualizarTabela(); // Chama o método para atualizar a tabela
+
                     limparCampos();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(FuncionarioForm.this, "O salário deve ser um número válido.");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(FuncionarioForm.this,
-                            "Erro ao salvar o funcionário: " + ex.getMessage());
+                            "Erro ao cadastrar o funcionário: " + ex.getMessage());
                 }
             }
         });
-        add(salvarButton);
+        add(cadastrarButton);
     }
 
     private void limparCampos() {
@@ -93,5 +115,7 @@ public class FuncionarioForm extends JPanel {
         cargoField.setText("");
         departamentoField.setText("");
         salarioField.setText("");
+        dataContratacaoField.setText("");
+        dataNascimentoField.setText("");
     }
 }

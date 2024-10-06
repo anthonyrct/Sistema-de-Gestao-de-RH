@@ -4,12 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.anthony.br.Models.Funcionario;
+import com.anthony.br.Models.Funcionario;
 
 public class FuncionarioDAO {
-    private final String url = "jdbc:postgresql://localhost:5432/seu_banco_de_dados"; // Ajuste o nome do seu banco
-    private final String user = "seu_usuario";
-    private final String password = "sua_senha";
+    private final String url = "jdbc:postgresql://localhost:5432/gestao_rh"; // Ajuste o nome do seu banco
+    private final String user = "postgres";
+    private final String password = "postgres";
 
     // Método para conectar ao banco de dados
     private Connection connect() throws SQLException {
@@ -31,7 +31,7 @@ public class FuncionarioDAO {
             pstmt.setString(5, funcionario.getCargo());
             pstmt.setString(6, funcionario.getDepartamento());
             pstmt.setDouble(7, funcionario.getSalario());
-            pstmt.setDate(8, new java.sql.Date(funcionario.getDataAdmissao().getTime()));
+            pstmt.setDate(8, java.sql.Date.valueOf(funcionario.getDataContratacao())); // Alteração aqui
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -50,7 +50,7 @@ public class FuncionarioDAO {
 
             while (rs.next()) {
                 Funcionario funcionario = new Funcionario();
-                funcionario.setId(rs.getInt("id"));
+                funcionario.setId(rs.getLong("id"));
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setCpf(rs.getString("cpf"));
                 funcionario.setEndereco(rs.getString("endereco"));
@@ -58,7 +58,7 @@ public class FuncionarioDAO {
                 funcionario.setCargo(rs.getString("cargo"));
                 funcionario.setDepartamento(rs.getString("departamento"));
                 funcionario.setSalario(rs.getDouble("salario"));
-                funcionario.setDataAdmissao(rs.getDate("data_admissao"));
+                funcionario.setDataContratacao(rs.getDate("data_admissao").toLocalDate()); // Alteração aqui
 
                 funcionarios.add(funcionario);
             }
@@ -83,8 +83,8 @@ public class FuncionarioDAO {
             pstmt.setString(5, funcionario.getCargo());
             pstmt.setString(6, funcionario.getDepartamento());
             pstmt.setDouble(7, funcionario.getSalario());
-            pstmt.setDate(8, new java.sql.Date(funcionario.getDataAdmissao().getTime()));
-            pstmt.setInt(9, funcionario.getId());
+            pstmt.setDate(8, java.sql.Date.valueOf(funcionario.getDataContratacao())); // Alteração aqui
+            pstmt.setLong(9, funcionario.getId());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+    version="2.2">
+    <persistence-unit name="gestao_rh_persistence_unit" transaction-type="RESOURCE_LOCAL">
+
+        <!-- Provedor JPA (Hibernate) -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Entidades gerenciadas pelo JPA -->
+        <class>com.anthony.br.Models.PontoEletrico</class>
+        <class>com.anthony.br.Models.Funcionario</class>
+        <!-- Adicione todas as entidades que o JPA gerenciará -->
+
+        <!-- Propriedades de conexão com o banco de dados -->
+        <properties>
+            <!-- Configurações do banco de dados -->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url"
+                value="jdbc:postgresql://localhost:5432/gestao_rh" />
+            <property name="javax.persistence.jdbc.user" value="postgres" />
+            <property name="javax.persistence.jdbc.password" value="postgres" />
+
+            <!-- Configurações do Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Cria/atualiza o banco
+            automaticamente -->
+            <property name="hibernate.show_sql" value="true" /> <!-- Exibe as queries SQL no console -->
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+    </persistence-unit>
+</persistence>
