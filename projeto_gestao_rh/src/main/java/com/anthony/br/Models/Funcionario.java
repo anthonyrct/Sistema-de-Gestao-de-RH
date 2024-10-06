@@ -2,6 +2,7 @@ package com.anthony.br.Models;
 
 import java.time.LocalDate;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "funcionarios")
@@ -45,8 +46,8 @@ public class Funcionario {
     @Column(nullable = true) // Atributo opcional
     private String contaBancaria;
 
-    @Column(nullable = true) // Atributo opcional
-    private String beneficios;
+    @ManyToMany(mappedBy = "funcionarios") // Mapeia o relacionamento com benefícios
+    private List<Beneficio> beneficios;
 
     // Construtor vazio (necessário para JPA)
     public Funcionario() {
@@ -55,7 +56,7 @@ public class Funcionario {
     // Construtor completo
     public Funcionario(String nome, String cpf, String cargo, Double salario, LocalDate dataContratacao,
             String departamento, LocalDate dataNascimento, String email, String endereco,
-            String telefone, String contaBancaria, String beneficios) {
+            String telefone, String contaBancaria, List<Beneficio> beneficios) {
         this.nome = nome;
         this.cpf = cpf;
         this.cargo = cargo;
@@ -167,11 +168,11 @@ public class Funcionario {
         this.contaBancaria = contaBancaria;
     }
 
-    public String getBeneficios() {
+    public List<Beneficio> getBeneficios() {
         return beneficios;
     }
 
-    public void setBeneficios(String beneficios) {
+    public void setBeneficios(List<Beneficio> beneficios) {
         this.beneficios = beneficios;
     }
 

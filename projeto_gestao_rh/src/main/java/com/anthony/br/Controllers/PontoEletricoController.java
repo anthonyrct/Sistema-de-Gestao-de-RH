@@ -31,8 +31,7 @@ public class PontoEletricoController {
     public List<PontoEletrico> buscarPontosPorFuncionario(Long funcionarioId) {
         EntityManager em = emf.createEntityManager();
         List<PontoEletrico> pontos = em
-                .createQuery("SELECT p FROM PontoEletrico p WHERE p.funcionarioId = :funcionarioId",
-                        PontoEletrico.class)
+                .createQuery("SELECT p FROM PontoEletrico p WHERE p.funcionario.id = :funcionarioId", PontoEletrico.class)
                 .setParameter("funcionarioId", funcionarioId)
                 .getResultList();
         em.close();

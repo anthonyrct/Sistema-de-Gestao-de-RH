@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public class FuncionarioForm extends JPanel {
     private JTextField nomeField, cpfField, enderecoField, telefoneField, cargoField, departamentoField, salarioField,
-            dataContratacaoField, dataNascimentoField;
+            dataContratacaoField, dataNascimentoField, emailField; // Adicionar emailField
     private JButton cadastrarButton;
     private FuncionarioTable funcionarioTable; // Referência à tabela de funcionários
 
@@ -57,6 +57,10 @@ public class FuncionarioForm extends JPanel {
         dataNascimentoField = new JTextField();
         add(dataNascimentoField);
 
+        add(new JLabel("Email:")); // Adicionar campo de email
+        emailField = new JTextField();
+        add(emailField);
+
         cadastrarButton = new JButton("Cadastrar");
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
@@ -67,6 +71,7 @@ public class FuncionarioForm extends JPanel {
                 String telefone = telefoneField.getText();
                 String cargo = cargoField.getText();
                 String departamento = departamentoField.getText();
+                String email = emailField.getText(); // Capturar email
                 double salario;
                 LocalDate dataContratacao;
                 LocalDate dataNascimento;
@@ -74,7 +79,8 @@ public class FuncionarioForm extends JPanel {
                 // Validação básica
                 if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty() ||
                         cargo.isEmpty() || departamento.isEmpty() || salarioField.getText().isEmpty() ||
-                        dataContratacaoField.getText().isEmpty() || dataNascimentoField.getText().isEmpty()) {
+                        dataContratacaoField.getText().isEmpty() || dataNascimentoField.getText().isEmpty()
+                        || email.isEmpty()) {
                     JOptionPane.showMessageDialog(FuncionarioForm.this, "Todos os campos devem ser preenchidos.");
                     return;
                 }
@@ -85,7 +91,8 @@ public class FuncionarioForm extends JPanel {
                     dataNascimento = LocalDate.parse(dataNascimentoField.getText());
 
                     // Criar uma instância do Funcionario com os dados do formulário
-                    Funcionario funcionario = new Funcionario(nome, cpf, cargo, salario, dataContratacao, departamento, dataNascimento, cpf, endereco, telefone, "", "");
+                    Funcionario funcionario = new Funcionario(nome, cpf, cargo, salario, dataContratacao, departamento,
+                            dataNascimento, email, endereco, telefone, "", null);
 
                     // Chamar o controller para salvar o funcionário
                     FuncionarioController funcionarioController = new FuncionarioController();
@@ -117,5 +124,6 @@ public class FuncionarioForm extends JPanel {
         salarioField.setText("");
         dataContratacaoField.setText("");
         dataNascimentoField.setText("");
+        emailField.setText(""); // Limpar o campo de email também
     }
 }
