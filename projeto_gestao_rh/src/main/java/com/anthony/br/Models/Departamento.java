@@ -23,7 +23,7 @@ public class Departamento {
 
     // Construtor com parâmetros
     public Departamento(String nome) {
-        this.nome = nome;
+        this.setNome(nome);
     }
 
     // Getters e Setters
@@ -40,6 +40,9 @@ public class Departamento {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome do departamento não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -49,5 +52,11 @@ public class Departamento {
 
     public void setFuncionarios(List<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
+    }
+
+    // toString para facilitar a visualização dos dados
+    @Override
+    public String toString() {
+        return "Departamento{id=" + id + ", nome='" + nome + "'}";
     }
 }

@@ -1,10 +1,11 @@
 package com.anthony.br.Models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 @Table(name = "recrutamentos")
@@ -18,10 +19,10 @@ public class Recrutamento {
     private String vaga;
 
     @Column(name = "data_abertura", nullable = false)
-    private Date dataAbertura;
+    private LocalDate dataAbertura;
 
     @Column(name = "data_fechamento")
-    private Date dataFechamento;
+    private LocalDate dataFechamento;
 
     @OneToMany(mappedBy = "recrutamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Candidato> candidatos;
@@ -31,12 +32,23 @@ public class Recrutamento {
         this.candidatos = new ArrayList<>();
     }
 
-    public Recrutamento(Long id, String vaga, Date dataAbertura, Date dataFechamento, List<Candidato> candidatos) {
+    public Recrutamento(Long id, String vaga, LocalDate dataAbertura, LocalDate dataFechamento, List<Candidato> candidatos) {
         this.id = id;
         this.vaga = vaga;
         this.dataAbertura = dataAbertura;
         this.dataFechamento = dataFechamento;
         this.candidatos = candidatos != null ? candidatos : new ArrayList<>();
+    }
+
+    // Métodos para manipulação de candidatos
+    public void adicionarCandidato(Candidato candidato) {
+        candidatos.add(candidato);
+        candidato.setRecrutamento(this); // Definir a referência de volta
+    }
+
+    public void removerCandidato(Candidato candidato) {
+        candidatos.remove(candidato);
+        candidato.setRecrutamento(null); // Remover a referência de volta
     }
 
     // Getters e Setters
@@ -56,19 +68,19 @@ public class Recrutamento {
         this.vaga = vaga;
     }
 
-    public Date getDataAbertura() {
+    public LocalDate getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(Date dataAbertura) {
+    public void setDataAbertura(LocalDate dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 
-    public Date getDataFechamento() {
+    public LocalDate getDataFechamento() {
         return dataFechamento;
     }
 
-    public void setDataFechamento(Date dataFechamento) {
+    public void setDataFechamento(LocalDate dataFechamento) {
         this.dataFechamento = dataFechamento;
     }
 
@@ -90,10 +102,8 @@ public class Recrutamento {
     // equals
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Recrutamento that = (Recrutamento) o;
         return Objects.equals(id, that.id) && Objects.equals(vaga, that.vaga) &&
                 Objects.equals(dataAbertura, that.dataAbertura) &&

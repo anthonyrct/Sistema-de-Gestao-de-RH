@@ -13,9 +13,14 @@ public class FolhaPagamento {
     private double fgts;
     private double totalBeneficios;
     private double salarioLiquido;
+    private List<PontoEletrico> registrosPonto; // Campo para registros de ponto
+
+    private static final double CARGA_HORARIA_PADRAO = 160.0; // Carga horária mensal padrão
+    private static final double HORAS_EXTRA_MULTIPLICADOR = 1.5; // Multiplicador de horas extras
 
     // Construtor
-    public FolhaPagamento(Funcionario funcionario, LocalDate mesReferencia) throws InvalidFolhaPagamentoException {
+    public FolhaPagamento(Funcionario funcionario, LocalDate mesReferencia, List<PontoEletrico> registrosPonto)
+            throws InvalidFolhaPagamentoException {
         if (funcionario == null) {
             throw new InvalidFolhaPagamentoException("Funcionário não pode ser nulo.");
         }
@@ -24,31 +29,40 @@ public class FolhaPagamento {
             throw new InvalidFolhaPagamentoException("A data de referência não pode ser nula.");
         }
 
+        if (registrosPonto == null || registrosPonto.isEmpty()) {
+            throw new InvalidFolhaPagamentoException("Registros de ponto não podem ser nulos ou vazios.");
+        }
+
         this.funcionario = funcionario;
         this.mesReferencia = mesReferencia;
+        this.registrosPonto = registrosPonto; // Atribui os registros de ponto
         validarFuncionario(funcionario); // Validações iniciais
         calcularValores();
     }
 
     // Método para calcular os valores da folha de pagamento
     private void calcularValores() throws InvalidFolhaPagamentoException {
-        // Validação do salário bruto
-        this.salarioBruto = funcionario.getSalario();
+        double horasTrabalhadas = calcularHorasTrabalhadas(registrosPonto);
+        double horasExtras = calcularHorasExtras(registrosPonto);
+
+        // Ajusta o salário bruto com base nas horas trabalhadas
+        this.salarioBruto = (horasTrabalhadas / CARGA_HORARIA_PADRAO) * funcionario.getSalario();
+
         if (salarioBruto <= 0) {
             throw new InvalidFolhaPagamentoException("O salário bruto deve ser maior que zero.");
         }
 
-        // Calcular INSS
+        // Calcula INSS e FGTS
         this.inss = calcularInss(salarioBruto);
-
-        // Calcular FGTS como 8% do salário bruto
         this.fgts = salarioBruto * 0.08; // 8% de FGTS
 
-        // Calcular o total de benefícios
+        // Calcula o total de benefícios
         this.totalBeneficios = calcularTotalBeneficios(funcionario.getBeneficios());
 
-        // Cálculo do salário líquido
-        this.salarioLiquido = salarioBruto - inss + totalBeneficios;
+        // Calcula o salário líquido (com base no salário bruto, INSS e benefícios)
+        this.salarioLiquido = salarioBruto - inss + totalBeneficios
+                + (horasExtras * (funcionario.getSalario() / CARGA_HORARIA_PADRAO) * HORAS_EXTRA_MULTIPLICADOR);
+
         if (salarioLiquido < 0) {
             throw new InvalidFolhaPagamentoException("O salário líquido não pode ser negativo.");
         }
@@ -72,7 +86,6 @@ public class FolhaPagamento {
             throw new InvalidFolhaPagamentoException("A data de contratação do funcionário é inválida.");
         }
 
-        // Validação dos benefícios
         for (Beneficio beneficio : funcionario.getBeneficios()) {
             if (beneficio.getValor() < 0) {
                 throw new InvalidFolhaPagamentoException(
@@ -81,21 +94,21 @@ public class FolhaPagamento {
         }
     }
 
-    // Método para calcular INSS (mantém o código anterior)
+    // Método para calcular INSS
     private double calcularInss(double salarioBruto) {
         double inss = 0.0;
         if (salarioBruto <= 1302.00) {
-            inss = salarioBruto * 0.075; // 7.5%
+            inss = salarioBruto * 0.075;
         } else if (salarioBruto <= 2571.29) {
-            inss = 1302.00 * 0.075 + (salarioBruto - 1302.00) * 0.09; // 9%
+            inss = 1302.00 * 0.075 + (salarioBruto - 1302.00) * 0.09;
         } else if (salarioBruto <= 3856.94) {
-            inss = 1302.00 * 0.075 + (2571.29 - 1302.00) * 0.09 + (salarioBruto - 2571.29) * 0.12; // 12%
+            inss = 1302.00 * 0.075 + (2571.29 - 1302.00) * 0.09 + (salarioBruto - 2571.29) * 0.12;
         } else if (salarioBruto <= 7507.49) {
             inss = 1302.00 * 0.075 + (2571.29 - 1302.00) * 0.09 + (3856.94 - 2571.29) * 0.12
-                    + (salarioBruto - 3856.94) * 0.14; // 14%
+                    + (salarioBruto - 3856.94) * 0.14;
         } else {
             inss = 1302.00 * 0.075 + (2571.29 - 1302.00) * 0.09 + (3856.94 - 2571.29) * 0.12
-                    + (7507.49 - 3856.94) * 0.14; // Teto do INSS
+                    + (7507.49 - 3856.94) * 0.14;
         }
         return inss;
     }
@@ -104,9 +117,33 @@ public class FolhaPagamento {
     private double calcularTotalBeneficios(List<Beneficio> beneficios) {
         double total = 0.0;
         for (Beneficio beneficio : beneficios) {
-            total += beneficio.getValor(); // Adiciona o valor de cada benefício
+            total += beneficio.getValor();
         }
         return total;
+    }
+
+    // Método para calcular as horas trabalhadas
+    private double calcularHorasTrabalhadas(List<PontoEletrico> registrosPonto) {
+        double horasTrabalhadas = 0.0;
+
+        for (PontoEletrico registro : registrosPonto) {
+            horasTrabalhadas += registro.getHorasTrabalhadas().toHours();
+        }
+
+        return horasTrabalhadas;
+    }
+
+    // Método para calcular horas extras
+    private double calcularHorasExtras(List<PontoEletrico> registrosPonto) {
+        double horasExtras = 0.0;
+
+        for (PontoEletrico registro : registrosPonto) {
+            if (registro.getHorasExtras().toHours() > 0) {
+                horasExtras += registro.getHorasExtras().toHours();
+            }
+        }
+
+        return horasExtras;
     }
 
     // Getters

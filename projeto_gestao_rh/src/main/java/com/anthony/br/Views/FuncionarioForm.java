@@ -92,7 +92,7 @@ public class FuncionarioForm extends JPanel {
 
                     // Criar uma instância do Funcionario com os dados do formulário
                     Funcionario funcionario = new Funcionario(nome, cpf, cargo, salario, dataContratacao, departamento,
-                            dataNascimento, email, endereco, telefone, "", null);
+                            dataNascimento, email, endereco, telefone, "", null, null);
 
                     // Chamar o controller para salvar o funcionário
                     FuncionarioController funcionarioController = new FuncionarioController();

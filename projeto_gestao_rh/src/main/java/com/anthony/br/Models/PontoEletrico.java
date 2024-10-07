@@ -3,10 +3,12 @@ package com.anthony.br.Models;
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "pontos_eletronicos") // Correção do nome da tabela
+@Table(name = "pontos_eletronicos")
 public class PontoEletrico {
 
     @Id
@@ -15,7 +17,7 @@ public class PontoEletrico {
 
     @ManyToOne
     @JoinColumn(name = "funcionario_id", nullable = false)
-    private Funcionario funcionario; // Relacionamento ManyToOne com Funcionario
+    private Funcionario funcionario;
 
     @Column(name = "data_registro", nullable = false)
     private LocalDateTime dataRegistro;
@@ -33,31 +35,40 @@ public class PontoEletrico {
     private Duration horasExtras;
 
     // Construtores
-    public PontoEletrico() {}
+    public PontoEletrico() {
+    }
 
     public PontoEletrico(Funcionario funcionario, LocalDateTime dataRegistro, LocalDateTime horaEntrada) {
         this.funcionario = funcionario;
         this.dataRegistro = dataRegistro;
         this.horaEntrada = horaEntrada;
-        calcularHoras(); // Calcula logo ao criar o ponto
+        this.horaSaida = null; // Inicializa como null
+        calcularHoras(); // Pode ser ajustado para evitar cálculos desnecessários
     }
 
     // Método para calcular horas trabalhadas e extras
-    public void calcularHoras() { // Mude para public
+    public void calcularHoras() {
         if (horaEntrada != null && horaSaida != null && horaSaida.isAfter(horaEntrada)) {
             this.horasTrabalhadas = Duration.between(horaEntrada, horaSaida);
             this.horasExtras = calcularHorasExtras(horasTrabalhadas);
         } else {
-            throw new IllegalArgumentException("Horário de saída deve ser posterior ao de entrada.");
+            this.horasTrabalhadas = Duration.ZERO; // Define como zero se não for válido
+            this.horasExtras = Duration.ZERO; // Define como zero se não for válido
         }
     }
 
     private Duration calcularHorasExtras(Duration horasTrabalhadas) {
-        Duration jornadaTrabalho = Duration.ofHours(8); // Jornada padrão de 8 horas
+        Duration jornadaTrabalho = Duration.ofHours(8);
         if (horasTrabalhadas.compareTo(jornadaTrabalho) > 0) {
             return horasTrabalhadas.minus(jornadaTrabalho);
         }
         return Duration.ZERO;
+    }
+
+    public static List<PontoEletrico> filtrarPontosPorPeriodo(List<PontoEletrico> registros, LocalDateTime inicio, LocalDateTime fim) {
+        return registros.stream()
+                .filter(ponto -> !ponto.getDataRegistro().isBefore(inicio) && !ponto.getDataRegistro().isAfter(fim))
+                .collect(Collectors.toList());
     }
 
     // Getters e Setters
@@ -91,7 +102,7 @@ public class PontoEletrico {
 
     public void setHoraEntrada(LocalDateTime horaEntrada) {
         this.horaEntrada = horaEntrada;
-        calcularHoras();
+        calcularHoras(); // Recalcular sempre que a entrada é alterada
     }
 
     public LocalDateTime getHoraSaida() {
@@ -100,7 +111,7 @@ public class PontoEletrico {
 
     public void setHoraSaida(LocalDateTime horaSaida) {
         this.horaSaida = horaSaida;
-        calcularHoras(); // Calcular horas sempre que a hora de saída é definida
+        calcularHoras(); // Recalcular sempre que a saída é alterada
     }
 
     public Duration getHorasTrabalhadas() {
@@ -119,8 +130,8 @@ public class PontoEletrico {
                 ", dataRegistro=" + dataRegistro +
                 ", horaEntrada=" + horaEntrada +
                 ", horaSaida=" + horaSaida +
-                ", horasTrabalhadas=" + horasTrabalhadas +
-                ", horasExtras=" + horasExtras +
+                ", horasTrabalhadas=" + horasTrabalhadas.toHours() + "h " + (horasTrabalhadas.toMinutes() % 60) + "m" +
+                ", horasExtras=" + horasExtras.toHours() + "h " + (horasExtras.toMinutes() % 60) + "m" +
                 '}';
     }
 

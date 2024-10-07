@@ -16,6 +16,8 @@ public class FuncionarioDAO {
         return DriverManager.getConnection(url, user, password);
     }
 
+    
+
     // Método para salvar um funcionário no banco de dados
     public void salvarFuncionario(Funcionario funcionario) throws SQLException {
         String sql = "INSERT INTO funcionarios (nome, cpf, endereco, telefone, cargo, departamento, salario, data_admissao) "

@@ -25,8 +25,8 @@ public class Cargo {
 
     // Construtor com parâmetros
     public Cargo(String nome, Double salarioBase) {
-        this.nome = nome;
-        this.salarioBase = salarioBase;
+        this.setNome(nome);
+        this.setSalarioBase(salarioBase);
     }
 
     // Getters e Setters
@@ -43,6 +43,9 @@ public class Cargo {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome do cargo não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -51,6 +54,9 @@ public class Cargo {
     }
 
     public void setSalarioBase(Double salarioBase) {
+        if (salarioBase == null || salarioBase < 0) {
+            throw new IllegalArgumentException("Salário base deve ser maior ou igual a zero.");
+        }
         this.salarioBase = salarioBase;
     }
 

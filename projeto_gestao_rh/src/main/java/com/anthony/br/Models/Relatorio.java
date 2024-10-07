@@ -1,7 +1,7 @@
 package com.anthony.br.Models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -19,14 +19,13 @@ public class Relatorio {
     private String conteudo;
 
     @Column(name = "data_geracao", nullable = false)
-    private Date dataGeracao;
+    private LocalDateTime dataGeracao; // Usando LocalDateTime ao invés de Date
 
     // Construtores
     public Relatorio() {
     }
 
-    public Relatorio(Long id, String tipoRelatorio, String conteudo, Date dataGeracao) {
-        this.id = id;
+    public Relatorio(String tipoRelatorio, String conteudo, LocalDateTime dataGeracao) {
         this.tipoRelatorio = tipoRelatorio;
         this.conteudo = conteudo;
         this.dataGeracao = dataGeracao;
@@ -37,15 +36,15 @@ public class Relatorio {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Não é necessário um setter para id, pois é gerado pelo banco
     public String getTipoRelatorio() {
         return tipoRelatorio;
     }
 
     public void setTipoRelatorio(String tipoRelatorio) {
+        if (tipoRelatorio == null || tipoRelatorio.isEmpty()) {
+            throw new IllegalArgumentException("O tipo de relatório não pode ser vazio.");
+        }
         this.tipoRelatorio = tipoRelatorio;
     }
 
@@ -54,14 +53,17 @@ public class Relatorio {
     }
 
     public void setConteudo(String conteudo) {
+        if (conteudo == null || conteudo.isEmpty()) {
+            throw new IllegalArgumentException("O conteúdo do relatório não pode ser vazio.");
+        }
         this.conteudo = conteudo;
     }
 
-    public Date getDataGeracao() {
+    public LocalDateTime getDataGeracao() {
         return dataGeracao;
     }
 
-    public void setDataGeracao(Date dataGeracao) {
+    public void setDataGeracao(LocalDateTime dataGeracao) {
         this.dataGeracao = dataGeracao;
     }
 

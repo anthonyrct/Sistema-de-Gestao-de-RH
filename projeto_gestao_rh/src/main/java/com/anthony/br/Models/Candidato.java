@@ -22,12 +22,15 @@ public class Candidato {
     @Column(nullable = false)
     private String curriculo;
 
+    @ManyToOne
+    @JoinColumn(name = "recrutamento_id")
+    private Recrutamento recrutamento; // Nova referência para Recrutamento
+
     // Construtores
     public Candidato() {
     }
 
-    public Candidato(int id, String nome, String email, String telefone, String curriculo) {
-        this.id = id;
+    public Candidato(String nome, String email, String telefone, String curriculo) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
@@ -39,15 +42,15 @@ public class Candidato {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // Não expor setter para id, já que é gerado pelo banco
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -56,6 +59,9 @@ public class Candidato {
     }
 
     public void setEmail(String email) {
+        if (email == null || !email.matches("^[\\w-.]+@[\\w-]+\\.[a-z]{2,4}$")) {
+            throw new IllegalArgumentException("Email inválido.");
+        }
         this.email = email;
     }
 
@@ -64,6 +70,9 @@ public class Candidato {
     }
 
     public void setTelefone(String telefone) {
+        if (telefone == null || telefone.length() < 10) {
+            throw new IllegalArgumentException("Telefone inválido. Deve ter pelo menos 10 dígitos.");
+        }
         this.telefone = telefone;
     }
 
@@ -73,6 +82,14 @@ public class Candidato {
 
     public void setCurriculo(String curriculo) {
         this.curriculo = curriculo;
+    }
+
+    public Recrutamento getRecrutamento() {
+        return recrutamento;
+    }
+
+    public void setRecrutamento(Recrutamento recrutamento) {
+        this.recrutamento = recrutamento;
     }
 
     // toString
@@ -99,4 +116,5 @@ public class Candidato {
     public int hashCode() {
         return Objects.hash(id, nome, email, telefone, curriculo);
     }
+
 }

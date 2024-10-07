@@ -49,6 +49,9 @@ public class Funcionario {
     @ManyToMany(mappedBy = "funcionarios") // Mapeia o relacionamento com benefícios
     private List<Beneficio> beneficios;
 
+    @OneToMany(mappedBy = "funcionario") // Mapeia o relacionamento com registros de ponto
+    private List<PontoEletrico> registrosDePonto;
+
     // Construtor vazio (necessário para JPA)
     public Funcionario() {
     }
@@ -56,7 +59,7 @@ public class Funcionario {
     // Construtor completo
     public Funcionario(String nome, String cpf, String cargo, Double salario, LocalDate dataContratacao,
             String departamento, LocalDate dataNascimento, String email, String endereco,
-            String telefone, String contaBancaria, List<Beneficio> beneficios) {
+            String telefone, String contaBancaria, List<Beneficio> beneficios, List<PontoEletrico> registrosDePonto) {
         this.nome = nome;
         this.cpf = cpf;
         this.cargo = cargo;
@@ -69,6 +72,7 @@ public class Funcionario {
         this.telefone = telefone;
         this.contaBancaria = contaBancaria;
         this.beneficios = beneficios;
+        this.registrosDePonto = registrosDePonto;
     }
 
     // Getters e Setters
@@ -174,6 +178,14 @@ public class Funcionario {
 
     public void setBeneficios(List<Beneficio> beneficios) {
         this.beneficios = beneficios;
+    }
+
+    public List<PontoEletrico> getRegistrosDePonto() {
+        return registrosDePonto;
+    }
+
+    public void setRegistrosDePonto(List<PontoEletrico> registrosDePonto) {
+        this.registrosDePonto = registrosDePonto;
     }
 
     // Métodos adicionais, caso necessário

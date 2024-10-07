@@ -1,6 +1,9 @@
 package com.anthony.br.Models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -12,23 +15,28 @@ public class Usuario {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "O nome não pode ser vazio.")
     private String nome;
 
     @Column(nullable = false, unique = true)
+    @Email(message = "Email deve ser válido.")
+    @NotBlank(message = "O email não pode ser vazio.")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "A senha não pode ser vazia.")
+    @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     private String senha;
 
+    @Enumerated(EnumType.STRING) // Usando Enum para o papel
     @Column(nullable = false)
-    private String role; // o role será usado para ver se o usuario será do RH ou funcionario normal
+    private Role role; // Tipo enum para papéis de usuário
 
     // Construtores
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String senha, String role) {
-        this.id = id;
+    public Usuario(String nome, String email, String senha, Role role) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -40,9 +48,7 @@ public class Usuario {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Não é necessário um setter para id, pois é gerado pelo banco
 
     public String getNome() {
         return nome;
@@ -68,11 +74,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -85,18 +91,22 @@ public class Usuario {
     // equals
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) 
-               && Objects.equals(email, usuario.email) && Objects.equals(role, usuario.role);
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) &&
+               Objects.equals(email, usuario.email) && role == usuario.role;
     }
 
     // hashCode
     @Override
     public int hashCode() {
         return Objects.hash(id, nome, email, role);
+    }
+
+    // Enum para papéis de usuário
+    public enum Role {
+        FUNCIONARIO,
+        RH
     }
 }

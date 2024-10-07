@@ -1,7 +1,7 @@
 package com.anthony.br.Models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate; // Usando LocalDate
 import java.util.Objects;
 
 @Entity
@@ -19,10 +19,10 @@ public class Treinamento {
     private String descricao;
 
     @Column(name = "data_inicio", nullable = false)
-    private Date dataInicio;
+    private LocalDate dataInicio; // Usando LocalDate ao invés de Date
 
     @Column(name = "data_fim", nullable = false)
-    private Date dataFim;
+    private LocalDate dataFim; // Usando LocalDate ao invés de Date
 
     @Column(nullable = false)
     private int cargaHoraria;
@@ -31,8 +31,7 @@ public class Treinamento {
     public Treinamento() {
     }
 
-    public Treinamento(Long id, String titulo, String descricao, Date dataInicio, Date dataFim, int cargaHoraria) {
-        this.id = id;
+    public Treinamento(String titulo, String descricao, LocalDate dataInicio, LocalDate dataFim, int cargaHoraria) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
@@ -45,15 +44,16 @@ public class Treinamento {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Não é necessário um setter para id, pois é gerado pelo banco
 
     public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
+        if (titulo == null || titulo.isEmpty()) {
+            throw new IllegalArgumentException("O título do treinamento não pode ser vazio.");
+        }
         this.titulo = titulo;
     }
 
@@ -62,22 +62,34 @@ public class Treinamento {
     }
 
     public void setDescricao(String descricao) {
+        if (descricao == null || descricao.isEmpty()) {
+            throw new IllegalArgumentException("A descrição do treinamento não pode ser vazia.");
+        }
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
+        if (dataInicio == null) {
+            throw new IllegalArgumentException("A data de início não pode ser nula.");
+        }
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataFim() {
+    public LocalDate getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(Date dataFim) {
+    public void setDataFim(LocalDate dataFim) {
+        if (dataFim == null) {
+            throw new IllegalArgumentException("A data de fim não pode ser nula.");
+        }
+        if (dataFim.isBefore(dataInicio)) {
+            throw new IllegalArgumentException("A data de fim não pode ser anterior à data de início.");
+        }
         this.dataFim = dataFim;
     }
 
@@ -86,27 +98,34 @@ public class Treinamento {
     }
 
     public void setCargaHoraria(int cargaHoraria) {
+        if (cargaHoraria <= 0) {
+            throw new IllegalArgumentException("A carga horária deve ser maior que zero.");
+        }
         this.cargaHoraria = cargaHoraria;
+    }
+
+    // Método para calcular a duração do treinamento
+    public long calcularDuracao() {
+        return dataInicio.until(dataFim).getDays();
     }
 
     // toString
     @Override
     public String toString() {
-        return "Treinamento{id=" + id + ", titulo='" + titulo + "', descricao='" + descricao + "', dataInicio=" + dataInicio +
-               ", dataFim=" + dataFim + ", cargaHoraria=" + cargaHoraria + "}";
+        return "Treinamento{id=" + id + ", titulo='" + titulo + "', descricao='" + descricao +
+               "', dataInicio=" + dataInicio + ", dataFim=" + dataFim +
+               ", cargaHoraria=" + cargaHoraria + "}";
     }
 
     // equals
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Treinamento that = (Treinamento) o;
-        return cargaHoraria == that.cargaHoraria && Objects.equals(id, that.id) && Objects.equals(titulo, that.titulo) &&
-               Objects.equals(descricao, that.descricao) && Objects.equals(dataInicio, that.dataInicio) &&
-               Objects.equals(dataFim, that.dataFim);
+        return cargaHoraria == that.cargaHoraria && Objects.equals(id, that.id) &&
+               Objects.equals(titulo, that.titulo) && Objects.equals(descricao, that.descricao) &&
+               Objects.equals(dataInicio, that.dataInicio) && Objects.equals(dataFim, that.dataFim);
     }
 
     // hashCode
