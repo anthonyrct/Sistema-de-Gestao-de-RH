@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ConsultaPontoView extends JFrame {
+public class ConsultaPontoView extends JPanel { // Mude de JFrame para JPanel
     private PontoEletricoController pontoEletricoController;
     private Funcionario funcionario;
     private Long funcionarioId;
@@ -23,11 +23,7 @@ public class ConsultaPontoView extends JFrame {
         this.funcionarioId = funcionario.getId(); // Pegando o ID do funcionário logado
         this.pontoEletricoController = new PontoEletricoController();
 
-        setTitle("Consulta de Ponto");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(null);
+        setLayout(null); // Continua usando layout absoluto, mas agora no JPanel
 
         // Adicionando componentes
         JLabel lblFuncionario = new JLabel("Consultando pontos de: " + funcionario.getNome());
@@ -53,7 +49,7 @@ public class ConsultaPontoView extends JFrame {
         });
     }
 
-    private void consultarPontos() {
+    void consultarPontos() {
         List<PontoEletrico> pontos = pontoEletricoController.buscarPontosPorFuncionario(funcionarioId);
 
         // Limpa a tabela antes de adicionar novos dados

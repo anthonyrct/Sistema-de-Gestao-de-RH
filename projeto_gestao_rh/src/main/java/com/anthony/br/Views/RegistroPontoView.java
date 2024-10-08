@@ -11,24 +11,23 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class RegistroPontoView extends JFrame {
+public class RegistroPontoView extends JPanel {
     private PontoEletricoController pontoEletricoController;
     private Funcionario funcionario;
+    private JanelaPrincipal janelaPrincipal; // Armazene a instância de JanelaPrincipal
 
     private JTextField txtHoraEntrada;
     private JTextField txtHoraSaida;
     private JButton btnRegistrar;
-    private JButton btnConsultar; // Adicionado corretamente
+    private JButton btnConsultar;
 
-    public RegistroPontoView(Funcionario funcionario) {
+    // Modifique o construtor para receber a instância de JanelaPrincipal
+    public RegistroPontoView(Funcionario funcionario, JanelaPrincipal janelaPrincipal) {
         this.funcionario = funcionario;
+        this.janelaPrincipal = janelaPrincipal; // Armazene a referência à instância de JanelaPrincipal
         this.pontoEletricoController = new PontoEletricoController();
 
-        setTitle("Registro de Ponto");
-        setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(null);
+        setLayout(null); // Continua usando layout absoluto, mas agora no JPanel
 
         JLabel lblHoraEntrada = new JLabel("Hora de Entrada (yyyy-MM-ddTHH:mm):");
         lblHoraEntrada.setBounds(10, 10, 200, 25);
@@ -50,7 +49,7 @@ public class RegistroPontoView extends JFrame {
         btnRegistrar.setBounds(10, 70, 360, 25);
         add(btnRegistrar);
 
-        btnConsultar = new JButton("Consultar Pontos"); // Adiciona o botão de consulta
+        btnConsultar = new JButton("Consultar Pontos");
         btnConsultar.setBounds(10, 110, 360, 25);
         add(btnConsultar);
 
@@ -114,8 +113,7 @@ public class RegistroPontoView extends JFrame {
     }
 
     private void abrirConsultaPonto() {
-        ConsultaPontoView consultaPontoView = new ConsultaPontoView(funcionario);
-        consultaPontoView.setVisible(true);
-        this.dispose();
+        janelaPrincipal.trocarPainel("consultaPonto"); // Use a instância para chamar trocarPainel
     }
+
 }

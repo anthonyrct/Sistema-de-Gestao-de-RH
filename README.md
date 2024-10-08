@@ -315,3 +315,14 @@ Desenvolver um sistema de gestão de RH que permitirá às empresas gerenciar se
 ### 12. Dificuldades na adaptação dos usuários ao novo sistema
 - **Impacto:** Alto
 - **Mitigação:** Proporcionar treinamentos contínuos e suporte pós-lançamento.
+
+## Diagramas do Projeto
+
+### Diagrama de Caso de Uso
+![Diagrama de Uso](imagens/Diagram%20de%20uso%20RH.drawio.pdf)
+
+### Diagrama de Classes
+![Diagrama de Classes](imagens/diagrama_de_Classe_Rh.png)
+
+### Diagrama de Sequência
+![Diagrama de Fluxo](imagens/Diagram%20de%20Fluxo%20RH.drawio.png)

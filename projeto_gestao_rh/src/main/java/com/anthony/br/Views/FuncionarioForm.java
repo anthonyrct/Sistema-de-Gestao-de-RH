@@ -11,110 +11,175 @@ import java.time.LocalDate;
 
 public class FuncionarioForm extends JPanel {
     private JTextField nomeField, cpfField, enderecoField, telefoneField, cargoField, departamentoField, salarioField,
-            dataContratacaoField, dataNascimentoField, emailField; // Adicionar emailField
+            dataContratacaoField, dataNascimentoField, emailField;
     private JButton cadastrarButton;
-    private FuncionarioTable funcionarioTable; // Referência à tabela de funcionários
+    private FuncionarioTable funcionarioTable;
 
     // Construtor que aceita uma instância de FuncionarioTable
     public FuncionarioForm(FuncionarioTable funcionarioTable) {
-        this.funcionarioTable = funcionarioTable; // Armazena a referência
+        this.funcionarioTable = funcionarioTable;
 
-        setLayout(new GridLayout(0, 2));
+        setLayout(new GridBagLayout()); // Usando GridBagLayout para melhor controle do layout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5); // Margens entre os componentes
 
-        add(new JLabel("Nome:"));
-        nomeField = new JTextField();
-        add(nomeField);
+        // Configuração dos componentes
+        JLabel lblNome = new JLabel("Nome:");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(lblNome, gbc);
+        nomeField = new JTextField(20);
+        gbc.gridx = 1;
+        add(nomeField, gbc);
 
-        add(new JLabel("CPF:"));
-        cpfField = new JTextField();
-        add(cpfField);
+        JLabel lblCpf = new JLabel("CPF:");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(lblCpf, gbc);
+        cpfField = new JTextField(20);
+        gbc.gridx = 1;
+        add(cpfField, gbc);
 
-        add(new JLabel("Endereço:"));
-        enderecoField = new JTextField();
-        add(enderecoField);
+        JLabel lblEndereco = new JLabel("Endereço:");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(lblEndereco, gbc);
+        enderecoField = new JTextField(20);
+        gbc.gridx = 1;
+        add(enderecoField, gbc);
 
-        add(new JLabel("Telefone:"));
-        telefoneField = new JTextField();
-        add(telefoneField);
+        JLabel lblTelefone = new JLabel("Telefone:");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(lblTelefone, gbc);
+        telefoneField = new JTextField(20);
+        gbc.gridx = 1;
+        add(telefoneField, gbc);
 
-        add(new JLabel("Cargo:"));
-        cargoField = new JTextField();
-        add(cargoField);
+        JLabel lblCargo = new JLabel("Cargo:");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(lblCargo, gbc);
+        cargoField = new JTextField(20);
+        gbc.gridx = 1;
+        add(cargoField, gbc);
 
-        add(new JLabel("Departamento:"));
-        departamentoField = new JTextField();
-        add(departamentoField);
+        JLabel lblDepartamento = new JLabel("Departamento:");
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        add(lblDepartamento, gbc);
+        departamentoField = new JTextField(20);
+        gbc.gridx = 1;
+        add(departamentoField, gbc);
 
-        add(new JLabel("Salário:"));
-        salarioField = new JTextField();
-        add(salarioField);
+        JLabel lblSalario = new JLabel("Salário:");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        add(lblSalario, gbc);
+        salarioField = new JTextField(20);
+        gbc.gridx = 1;
+        add(salarioField, gbc);
 
-        add(new JLabel("Data de Contratação:"));
-        dataContratacaoField = new JTextField();
-        add(dataContratacaoField);
+        JLabel lblDataContratacao = new JLabel("Data de Contratação:");
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        add(lblDataContratacao, gbc);
+        dataContratacaoField = new JTextField(20);
+        gbc.gridx = 1;
+        add(dataContratacaoField, gbc);
 
-        add(new JLabel("Data de Nascimento:"));
-        dataNascimentoField = new JTextField();
-        add(dataNascimentoField);
+        JLabel lblDataNascimento = new JLabel("Data de Nascimento:");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        add(lblDataNascimento, gbc);
+        dataNascimentoField = new JTextField(20);
+        gbc.gridx = 1;
+        add(dataNascimentoField, gbc);
 
-        add(new JLabel("Email:")); // Adicionar campo de email
-        emailField = new JTextField();
-        add(emailField);
+        JLabel lblEmail = new JLabel("Email:"); // Campo de email
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        add(lblEmail, gbc);
+        emailField = new JTextField(20);
+        gbc.gridx = 1;
+        add(emailField, gbc);
 
         cadastrarButton = new JButton("Cadastrar");
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        gbc.gridwidth = 2; // O botão ocupa duas colunas
+        add(cadastrarButton, gbc);
+
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nome = nomeField.getText();
-                String cpf = cpfField.getText();
-                String endereco = enderecoField.getText();
-                String telefone = telefoneField.getText();
-                String cargo = cargoField.getText();
-                String departamento = departamentoField.getText();
-                String email = emailField.getText(); // Capturar email
-                double salario;
-                LocalDate dataContratacao;
-                LocalDate dataNascimento;
-
-                // Validação básica
-                if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty() ||
-                        cargo.isEmpty() || departamento.isEmpty() || salarioField.getText().isEmpty() ||
-                        dataContratacaoField.getText().isEmpty() || dataNascimentoField.getText().isEmpty()
-                        || email.isEmpty()) {
-                    JOptionPane.showMessageDialog(FuncionarioForm.this, "Todos os campos devem ser preenchidos.");
-                    return;
-                }
-
-                try {
-                    salario = Double.parseDouble(salarioField.getText());
-                    dataContratacao = LocalDate.parse(dataContratacaoField.getText());
-                    dataNascimento = LocalDate.parse(dataNascimentoField.getText());
-
-                    // Criar uma instância do Funcionario com os dados do formulário
-                    Funcionario funcionario = new Funcionario(nome, cpf, cargo, salario, dataContratacao, departamento,
-                            dataNascimento, email, endereco, telefone, "", null, null);
-
-                    // Chamar o controller para salvar o funcionário
-                    FuncionarioController funcionarioController = new FuncionarioController();
-                    funcionarioController.cadastrarFuncionario(funcionario);
-                    JOptionPane.showMessageDialog(FuncionarioForm.this, "Funcionário cadastrado com sucesso!");
-
-                    // Atualiza a tabela após o cadastro
-                    funcionarioTable.atualizarTabela(); // Chama o método para atualizar a tabela
-
-                    limparCampos();
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(FuncionarioForm.this, "O salário deve ser um número válido.");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(FuncionarioForm.this,
-                            "Erro ao cadastrar o funcionário: " + ex.getMessage());
-                }
+                cadastrarFuncionario();
             }
         });
-        add(cadastrarButton);
+    }
+
+    private void cadastrarFuncionario() {
+        // Captura os valores dos campos
+        String nome = nomeField.getText();
+        String cpf = cpfField.getText();
+        String endereco = enderecoField.getText();
+        String telefone = telefoneField.getText();
+        String cargo = cargoField.getText();
+        String departamento = departamentoField.getText();
+        String email = emailField.getText();
+        double salario;
+        LocalDate dataContratacao;
+        LocalDate dataNascimento;
+
+        // Validação dos campos
+        if (!validarCampos()) {
+            JOptionPane.showMessageDialog(FuncionarioForm.this, "Todos os campos devem ser preenchidos.");
+            return;
+        }
+
+        try {
+            salario = Double.parseDouble(salarioField.getText());
+            dataContratacao = LocalDate.parse(dataContratacaoField.getText());
+            dataNascimento = LocalDate.parse(dataNascimentoField.getText());
+
+            // Criar instância do Funcionario
+            Funcionario funcionario = new Funcionario(nome, cpf, cargo, salario, dataContratacao, departamento,
+                    dataNascimento, email, endereco, telefone, "", null, null);
+
+            // Chamar o controller para salvar o funcionário
+            FuncionarioController funcionarioController = new FuncionarioController();
+            funcionarioController.cadastrarFuncionario(funcionario);
+
+            JOptionPane.showMessageDialog(FuncionarioForm.this, "Funcionário cadastrado com sucesso!");
+
+            // Atualiza a tabela após o cadastro
+            funcionarioTable.atualizarTabela();
+
+            limparCampos();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(FuncionarioForm.this, "O salário deve ser um número válido.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(FuncionarioForm.this, "Erro ao cadastrar o funcionário: " + ex.getMessage());
+        }
+    }
+
+    private boolean validarCampos() {
+        // Validação simples para verificar se algum campo está vazio
+        return !nomeField.getText().isEmpty() &&
+                !cpfField.getText().isEmpty() &&
+                !enderecoField.getText().isEmpty() &&
+                !telefoneField.getText().isEmpty() &&
+                !cargoField.getText().isEmpty() &&
+                !departamentoField.getText().isEmpty() &&
+                !salarioField.getText().isEmpty() &&
+                !dataContratacaoField.getText().isEmpty() &&
+                !dataNascimentoField.getText().isEmpty() &&
+                !emailField.getText().isEmpty();
     }
 
     private void limparCampos() {
+        // Limpa todos os campos do formulário
         nomeField.setText("");
         cpfField.setText("");
         enderecoField.setText("");
@@ -124,6 +189,6 @@ public class FuncionarioForm extends JPanel {
         salarioField.setText("");
         dataContratacaoField.setText("");
         dataNascimentoField.setText("");
-        emailField.setText(""); // Limpar o campo de email também
+        emailField.setText("");
     }
 }
