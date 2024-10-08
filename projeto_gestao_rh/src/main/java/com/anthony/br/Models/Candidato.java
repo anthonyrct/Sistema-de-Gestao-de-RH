@@ -1,29 +1,30 @@
 package com.anthony.br.Models;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.*; // Importa as anotações do JPA
+import java.util.Objects; // Importa a classe Objects para facilitar comparações
 
-@Entity
-@Table(name = "candidatos")
+@Entity // Indica que esta classe é uma entidade JPA
+@Table(name = "candidatos") // Define o nome da tabela no banco de dados
 public class Candidato {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @Id // Indica que este campo é a chave primária
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera o valor da chave primária automaticamente
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false) // Define que este campo não pode ser nulo
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true) // Define que este campo não pode ser nulo e deve ser único
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false) // Define que este campo não pode ser nulo
     private String telefone;
 
-    @Column(nullable = false)
+    @Column(nullable = false) // Define que este campo não pode ser nulo
     private String curriculo;
 
-    @ManyToOne
-    @JoinColumn(name = "recrutamento_id")
+    @ManyToOne // Define um relacionamento muitos-para-um com a classe Recrutamento
+    @JoinColumn(name = "recrutamento_id") // Define a coluna que referencia a entidade Recrutamento
     private Recrutamento recrutamento; // Nova referência para Recrutamento
 
     // Construtores
@@ -48,6 +49,7 @@ public class Candidato {
     }
 
     public void setNome(String nome) {
+        // Validação para garantir que o nome não seja vazio
         if (nome == null || nome.isEmpty()) {
             throw new IllegalArgumentException("O nome não pode ser vazio.");
         }
@@ -59,6 +61,7 @@ public class Candidato {
     }
 
     public void setEmail(String email) {
+        // Validação para garantir que o email seja válido
         if (email == null || !email.matches("^[\\w-.]+@[\\w-]+\\.[a-z]{2,4}$")) {
             throw new IllegalArgumentException("Email inválido.");
         }
@@ -70,6 +73,7 @@ public class Candidato {
     }
 
     public void setTelefone(String telefone) {
+        // Validação para garantir que o telefone tenha pelo menos 10 dígitos
         if (telefone == null || telefone.length() < 10) {
             throw new IllegalArgumentException("Telefone inválido. Deve ter pelo menos 10 dígitos.");
         }
@@ -81,7 +85,7 @@ public class Candidato {
     }
 
     public void setCurriculo(String curriculo) {
-        this.curriculo = curriculo;
+        this.curriculo = curriculo; // Pode ser qualquer valor
     }
 
     public Recrutamento getRecrutamento() {
@@ -89,32 +93,32 @@ public class Candidato {
     }
 
     public void setRecrutamento(Recrutamento recrutamento) {
-        this.recrutamento = recrutamento;
+        this.recrutamento = recrutamento; // Pode ser associado a um recrutamento
     }
 
-    // toString
+    // Método toString para representação em String do objeto Candidato
     @Override
     public String toString() {
         return "Candidato{id=" + id + ", nome='" + nome + "', email='" + email + "', telefone='" + telefone +
                 "', curriculo='" + curriculo + "'}";
     }
 
-    // equals
+    // Método equals para comparação de igualdade entre objetos Candidato
     @Override
     public boolean equals(Object o) {
         if (this == o)
-            return true;
+            return true; // Verifica se são o mesmo objeto
         if (o == null || getClass() != o.getClass())
-            return false;
-        Candidato that = (Candidato) o;
+            return false; // Verifica se o objeto é nulo ou não é da mesma classe
+        Candidato that = (Candidato) o; // Faz o cast para Candidato
+        // Compara os campos relevantes para igualdade
         return id == that.id && Objects.equals(nome, that.nome) && Objects.equals(email, that.email) &&
                 Objects.equals(telefone, that.telefone) && Objects.equals(curriculo, that.curriculo);
     }
 
-    // hashCode
+    // Método hashCode para gerar um código hash para o objeto
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, email, telefone, curriculo);
+        return Objects.hash(id, nome, email, telefone, curriculo); // Gera o código hash baseado nos campos relevantes
     }
-
 }

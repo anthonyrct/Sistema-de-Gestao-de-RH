@@ -3,31 +3,56 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
     version="2.2">
+
+    <!-- Unidade de persistência, onde configuramos a conexão e as entidades JPA -->
     <persistence-unit name="gestao_rh_persistence_unit" transaction-type="RESOURCE_LOCAL">
+        <!-- Define o nome da unidade de persistência como "gestao_rh_persistence_unit" -->
+        <!-- transaction-type="RESOURCE_LOCAL" indica que o gerenciamento de transações será feito localmente (sem JTA) -->
 
-        <!-- Provedor JPA (Hibernate) -->
+        <!-- Provedor JPA utilizado -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Define o Hibernate como o provedor JPA que gerencia a persistência -->
 
-        <!-- Entidades gerenciadas pelo JPA -->
+        <!-- Entidades JPA gerenciadas -->
         <class>com.anthony.br.Models.PontoEletrico</class>
         <class>com.anthony.br.Models.Funcionario</class>
-        <!-- Adicione todas as entidades que o JPA gerenciará -->
+        <!-- Lista as classes de entidade que serão gerenciadas pelo JPA -->
+        <!-- Outras entidades do projeto também devem ser adicionadas aqui, por exemplo:
+             <class>com.anthony.br.Models.Beneficio</class> -->
 
-        <!-- Propriedades de conexão com o banco de dados -->
+        <!-- Propriedades de conexão e configurações do banco de dados -->
         <properties>
-            <!-- Configurações do banco de dados -->
+            <!-- Configurações de conexão com o banco de dados -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="javax.persistence.jdbc.url"
-                value="jdbc:postgresql://localhost:5432/gestao_rh" />
-            <property name="javax.persistence.jdbc.user" value="postgres" />
-            <property name="javax.persistence.jdbc.password" value="postgres" />
+            <!-- Driver JDBC para conectar ao banco de dados PostgreSQL -->
 
-            <!-- Configurações do Hibernate -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/gestao_rh" />
+            <!-- URL de conexão com o banco de dados PostgreSQL local na porta 5432, usando o banco "gestao_rh" -->
+
+            <property name="javax.persistence.jdbc.user" value="postgres" />
+            <!-- Usuário do banco de dados PostgreSQL -->
+
+            <property name="javax.persistence.jdbc.password" value="postgres" />
+            <!-- Senha do usuário do banco de dados -->
+
+            <!-- Configurações específicas do Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-            <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Cria/atualiza o banco
-            automaticamente -->
-            <property name="hibernate.show_sql" value="true" /> <!-- Exibe as queries SQL no console -->
+            <!-- O Hibernate precisa de um "dialeto" que corresponda ao banco de dados em uso. 
+            Aqui, especificamos o PostgreSQLDialect para PostgreSQL. -->
+
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <!-- Define o comportamento de criação/atualização do banco de dados automaticamente.
+                 Opções incluem:
+                 - "create": cria as tabelas, removendo as anteriores.
+                 - "update": atualiza o esquema do banco, sem perder dados.
+                 - "validate": valida o esquema, sem fazer alterações.
+                 - "none": nenhuma ação é executada. -->
+
+            <property name="hibernate.show_sql" value="true" />
+            <!-- Exibe as queries SQL geradas pelo Hibernate no console. Isso é útil para depuração. -->
+
             <property name="hibernate.format_sql" value="true" />
+            <!-- Formata as queries SQL para que fiquem mais legíveis no console. -->
         </properties>
     </persistence-unit>
 </persistence>

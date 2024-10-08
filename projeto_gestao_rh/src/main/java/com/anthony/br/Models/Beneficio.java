@@ -1,39 +1,40 @@
 package com.anthony.br.Models;
 
-import javax.persistence.*;
+import javax.persistence.*; // Importa as anotações do JPA
 import java.util.List;
 
-@Entity
-@Table(name = "beneficios")
+@Entity // Indica que esta classe é uma entidade JPA
+@Table(name = "beneficios") // Define o nome da tabela no banco de dados
 public class Beneficio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @Id // Indica que este campo é a chave primária
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera o valor da chave primária automaticamente
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true) // Define que este campo não pode ser nulo e deve ser único
     private String nome;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING) // Armazena o tipo de benefício como uma string
+    @Column(nullable = false) // Define que este campo não pode ser nulo
     private TipoBeneficio tipo;  // Campo para diferenciar o tipo de benefício
 
-    @Column(nullable = false)
-    private double valor;
+    @Column(nullable = false) // Define que este campo não pode ser nulo
+    private double valor; // Valor do benefício
 
-    @Column(nullable = false)
+    @Column(nullable = false) // Define que este campo não pode ser nulo
     private boolean isPercentual;  // Define se o valor é percentual (true) ou fixo (false)
 
-    @ManyToMany
-    @JoinTable(name = "funcionarios_beneficios", 
-               joinColumns = @JoinColumn(name = "beneficio_id"), 
-               inverseJoinColumns = @JoinColumn(name = "funcionario_id"))
-    private List<Funcionario> funcionarios;
+    @ManyToMany // Define um relacionamento muitos-para-muitos com a classe Funcionario
+    @JoinTable(name = "funcionarios_beneficios",  // Nome da tabela de junção
+               joinColumns = @JoinColumn(name = "beneficio_id"), // Coluna que referencia esta entidade
+               inverseJoinColumns = @JoinColumn(name = "funcionario_id")) // Coluna que referencia a entidade Funcionario
+    private List<Funcionario> funcionarios; // Lista de funcionários associados a este benefício
 
     // Construtor padrão
     public Beneficio() {
     }
 
-    // Construtor com parâmetros
+    // Construtor com parâmetros para inicializar os atributos
     public Beneficio(String nome, TipoBeneficio tipo, double valor, boolean isPercentual) {
         this.nome = nome;
         this.tipo = tipo;
@@ -41,6 +42,7 @@ public class Beneficio {
         this.isPercentual = isPercentual;
     }
 
+    // Enumeração para os tipos de benefício
     public enum TipoBeneficio {
         VALE_TRANSPORTE,
         VALE_REFEICAO,
@@ -49,7 +51,7 @@ public class Beneficio {
         OUTRO
     }
 
-    // Getters e Setters
+    // Getters e Setters para acessar e modificar os atributos
     public Long getId() {
         return id;
     }

@@ -1,30 +1,37 @@
 package com.anthony.br.Models;
 
+// Importando as anotações necessárias para a JPA
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+// Definindo a entidade JPA para a tabela "relatorios"
 @Entity
 @Table(name = "relatorios")
 public class Relatorio {
 
+    // Identificador único da entidade, gerado automaticamente pelo banco de dados
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Tipo de relatório, não pode ser nulo. Exemplos: desempenho, horas trabalhadas, etc.
     @Column(name = "tipo_relatorio", nullable = false)
-    private String tipoRelatorio; // Ex: desempenho, horas trabalhadas, etc.
+    private String tipoRelatorio; 
 
+    // Conteúdo do relatório, não pode ser nulo
     @Column(nullable = false)
     private String conteudo;
 
+    // Data de geração do relatório, não pode ser nula. Usando LocalDateTime ao invés de Date
     @Column(name = "data_geracao", nullable = false)
-    private LocalDateTime dataGeracao; // Usando LocalDateTime ao invés de Date
+    private LocalDateTime dataGeracao; 
 
-    // Construtores
+    // Construtor padrão
     public Relatorio() {
     }
 
+    // Construtor que recebe todos os parâmetros necessários
     public Relatorio(String tipoRelatorio, String conteudo, LocalDateTime dataGeracao) {
         this.tipoRelatorio = tipoRelatorio;
         this.conteudo = conteudo;
@@ -36,11 +43,12 @@ public class Relatorio {
         return id;
     }
 
-    // Não é necessário um setter para id, pois é gerado pelo banco
+    // Não é necessário um setter para o id, pois ele é gerado pelo banco
     public String getTipoRelatorio() {
         return tipoRelatorio;
     }
 
+    // Setter para o tipo de relatório com validação
     public void setTipoRelatorio(String tipoRelatorio) {
         if (tipoRelatorio == null || tipoRelatorio.isEmpty()) {
             throw new IllegalArgumentException("O tipo de relatório não pode ser vazio.");
@@ -52,6 +60,7 @@ public class Relatorio {
         return conteudo;
     }
 
+    // Setter para o conteúdo do relatório com validação
     public void setConteudo(String conteudo) {
         if (conteudo == null || conteudo.isEmpty()) {
             throw new IllegalArgumentException("O conteúdo do relatório não pode ser vazio.");
@@ -67,25 +76,23 @@ public class Relatorio {
         this.dataGeracao = dataGeracao;
     }
 
-    // toString
+    // Método toString para representação textual da classe
     @Override
     public String toString() {
         return "Relatorio{id=" + id + ", tipoRelatorio='" + tipoRelatorio + "', dataGeracao=" + dataGeracao + "}";
     }
 
-    // equals
+    // Método equals para comparar duas instâncias da classe
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Relatorio relatorio = (Relatorio) o;
+        if (this == o) return true; // Verifica se é a mesma referência
+        if (o == null || getClass() != o.getClass()) return false; // Verifica se o objeto é nulo ou de outra classe
+        Relatorio relatorio = (Relatorio) o; // Faz o cast para a classe correta
         return Objects.equals(id, relatorio.id) && Objects.equals(tipoRelatorio, relatorio.tipoRelatorio)
                 && Objects.equals(conteudo, relatorio.conteudo) && Objects.equals(dataGeracao, relatorio.dataGeracao);
     }
 
-    // hashCode
+    // Método hashCode para gerar um código hash baseado nos atributos da classe
     @Override
     public int hashCode() {
         return Objects.hash(id, tipoRelatorio, conteudo, dataGeracao);

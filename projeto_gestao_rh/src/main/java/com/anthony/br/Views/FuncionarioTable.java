@@ -5,6 +5,11 @@ import javax.swing.table.DefaultTableModel;
 import com.anthony.br.Controllers.FuncionarioController;
 import com.anthony.br.Models.Funcionario;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import com.anthony.br.Controllers.FuncionarioController;
+import com.anthony.br.Models.Funcionario;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,43 +20,44 @@ public class FuncionarioTable extends JPanel {
     private DefaultTableModel tableModel;
     private JButton atualizarButton;
 
+    // Construtor da classe FuncionarioTable
     public FuncionarioTable() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout());  // Define o layout do painel como BorderLayout
 
-        // Definição do modelo da tabela
-        String[] columnNames = { "Nome", "CPF", "Cargo", "Salário", "Departamento" };
-        tableModel = new DefaultTableModel(columnNames, 0);
-        table = new JTable(tableModel);
+        // Definição das colunas da tabela
+        String[] columnNames = { "Nome", "CPF", "Cargo", "Salário", "Departamento" }; 
+        tableModel = new DefaultTableModel(columnNames, 0); // Modelo da tabela com as colunas definidas
+        table = new JTable(tableModel);  // Cria a tabela com o modelo
 
-        // Adicionando a tabela em um JScrollPane para rolagem
+        // Adiciona a tabela em um JScrollPane para permitir rolagem
         JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);  // Adiciona o JScrollPane ao centro do painel
 
-        // Botão para atualizar a lista de funcionários
+        // Cria o botão de atualizar
         atualizarButton = new JButton("Atualizar");
+        // Adiciona um ActionListener para o botão de atualizar
         atualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                atualizarTabela(); // Chama o método de atualização da tabela
+                atualizarTabela();  // Chama o método que atualiza os dados da tabela quando o botão é clicado
             }
         });
-        add(atualizarButton, BorderLayout.SOUTH);
+        add(atualizarButton, BorderLayout.SOUTH);  // Adiciona o botão na parte inferior do painel
 
-        // Carregar dados iniciais
-        atualizarTabela(); // Atualiza a tabela ao inicializar
+        // Carrega os dados iniciais
+        atualizarTabela();  // Atualiza a tabela quando o painel é inicializado
     }
 
-    // Método para atualizar a tabela
+    // Método que atualiza os dados da tabela
     public void atualizarTabela() {
-        // Limpa os dados existentes na tabela
+        // Limpa os dados existentes na tabela antes de adicionar novos
         tableModel.setRowCount(0);
 
-        // Recupera a lista de funcionários do controlador
+        // Cria uma instância do controlador de funcionários para obter os dados
         FuncionarioController funcionarioController = new FuncionarioController();
-        List<Funcionario> funcionarios = funcionarioController.listarFuncionarios(); // Método que você deve implementar
-                                                                                     // no controlador
+        List<Funcionario> funcionarios = funcionarioController.listarFuncionarios();  // Método para listar funcionários
 
-        // Adiciona os funcionários à tabela
+        // Adiciona os dados dos funcionários na tabela
         for (Funcionario funcionario : funcionarios) {
             Object[] row = {
                     funcionario.getNome(),
@@ -60,7 +66,7 @@ public class FuncionarioTable extends JPanel {
                     funcionario.getSalario(),
                     funcionario.getDepartamento()
             };
-            tableModel.addRow(row);
+            tableModel.addRow(row);  // Adiciona uma linha na tabela para cada funcionário
         }
     }
 }

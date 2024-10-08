@@ -4,99 +4,101 @@
 
 
 
-    //(em progresso)
-// package com.anthony.br.Views;
+//     //(em progresso)
+// // package com.anthony.br.Views;
 
+// // Importando as classes necessárias para a construção da interface
 // import java.awt.BorderLayout;
-// import java.awt.*;
-// import java.time.LocalDate;
-// import java.util.List;
+// import java.awt.*; // Importa todas as classes do pacote awt
+// import java.time.LocalDate; // Para manipulação de datas
+// import java.util.List; // Para uso de listas
 
-// import javax.faces.event.ActionEvent;
-// import javax.faces.event.ActionListener;
-// import javax.swing.*;
+// import javax.swing.*; // Importa classes do pacote Swing
+// import com.anthony.br.Models.FolhaPagamento; // Importa a classe FolhaPagamento
+// import com.anthony.br.Models.Funcionario; // Importa a classe Funcionario
 
-// import com.anthony.br.Models.FolhaPagamento;
-// import com.anthony.br.Models.Funcionario;
+// // Classe que representa a interface de geração de folha de pagamento
+// public class FolhaPagamentoView extends JFrame {
+//     // Componentes da interface
+//     private JComboBox<Funcionario> funcionarioComboBox; // ComboBox para selecionar o funcionário
+//     private JComboBox<String> mesReferenciaComboBox; // ComboBox para selecionar o mês de referência
+//     private JButton gerarFolhaButton; // Botão para gerar a folha de pagamento
+//     private JButton exportarPDFButton; // Botão para exportar a folha para PDF
+//     private JTextArea resultadoArea; // Área de texto para exibir os resultados
 
-// public class FolhaPagamentoView extends JFrame{
-//      private JComboBox<Funcionario> funcionarioComboBox;
-//     private JComboBox<String> mesReferenciaComboBox;
-//     private JButton gerarFolhaButton;
-//     private JButton exportarPDFButton;
-//     private JTextArea resultadoArea;
-
+//     // Construtor da classe que recebe uma lista de funcionários
 //     public FolhaPagamentoView(List<Funcionario> funcionarios) {
-//         setTitle("Geração de Folha de Pagamento");
-//         setSize(600, 400);
-//         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//         setLayout(new BorderLayout());
+//         setTitle("Geração de Folha de Pagamento"); // Define o título da janela
+//         setSize(600, 400); // Define o tamanho da janela
+//         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
+//         setLayout(new BorderLayout()); // Define o layout da janela como BorderLayout
 
 //         // Painel de seleção de funcionário e mês
 //         JPanel selectionPanel = new JPanel();
-//         selectionPanel.setLayout(new GridLayout(2, 2));
+//         selectionPanel.setLayout(new GridLayout(2, 2)); // Define o layout do painel como GridLayout
 
 //         // ComboBox para selecionar o funcionário
 //         funcionarioComboBox = new JComboBox<>();
 //         for (Funcionario funcionario : funcionarios) {
-//             funcionarioComboBox.addItem(funcionario);
+//             funcionarioComboBox.addItem(funcionario); // Adiciona cada funcionário à ComboBox
 //         }
-//         selectionPanel.add(new JLabel("Selecione o Funcionário:"));
-//         selectionPanel.add(funcionarioComboBox);
+//         selectionPanel.add(new JLabel("Selecione o Funcionário:")); // Adiciona um rótulo
+//         selectionPanel.add(funcionarioComboBox); // Adiciona a ComboBox de funcionários ao painel
 
 //         // ComboBox para selecionar o mês de referência
-//         mesReferenciaComboBox = new JComboBox<>(getMeses());
-//         selectionPanel.add(new JLabel("Selecione o Mês de Referência:"));
-//         selectionPanel.add(mesReferenciaComboBox);
+//         mesReferenciaComboBox = new JComboBox<>(getMeses()); // Inicializa a ComboBox com os meses
+//         selectionPanel.add(new JLabel("Selecione o Mês de Referência:")); // Adiciona um rótulo
+//         selectionPanel.add(mesReferenciaComboBox); // Adiciona a ComboBox de meses ao painel
 
 //         // Painel de botões
 //         JPanel buttonPanel = new JPanel();
-//         gerarFolhaButton = new JButton("Gerar Folha");
-//         exportarPDFButton = new JButton("Exportar para PDF");
+//         gerarFolhaButton = new JButton("Gerar Folha"); // Inicializa o botão de gerar folha
+//         exportarPDFButton = new JButton("Exportar para PDF"); // Inicializa o botão de exportar para PDF
 
-//         buttonPanel.add(gerarFolhaButton);
-//         buttonPanel.add(exportarPDFButton);
+//         buttonPanel.add(gerarFolhaButton); // Adiciona o botão de gerar folha ao painel
+//         buttonPanel.add(exportarPDFButton); // Adiciona o botão de exportar ao painel
 
 //         // Área de exibição dos resultados
-//         resultadoArea = new JTextArea(10, 50);
-//         resultadoArea.setEditable(false);
-//         JScrollPane scrollPane = new JScrollPane(resultadoArea);
+//         resultadoArea = new JTextArea(10, 50); // Cria uma área de texto com 10 linhas e 50 colunas
+//         resultadoArea.setEditable(false); // Define a área de texto como não editável
+//         JScrollPane scrollPane = new JScrollPane(resultadoArea); // Cria um JScrollPane para a área de texto
 
 //         // Adiciona os componentes à janela
-//         add(selectionPanel, BorderLayout.NORTH);
-//         add(buttonPanel, BorderLayout.CENTER);
-//         add(scrollPane, BorderLayout.SOUTH);
+//         add(selectionPanel, BorderLayout.NORTH); // Adiciona o painel de seleção ao topo da janela
+//         add(buttonPanel, BorderLayout.CENTER); // Adiciona o painel de botões ao centro da janela
+//         add(scrollPane, BorderLayout.SOUTH); // Adiciona o painel de rolagem da área de texto ao fundo da janela
 
 //         // Ações dos botões
 //         gerarFolhaButton.addActionListener(new ActionListener() {
 //             @Override
 //             public void actionPerformed(ActionEvent e) {
-//                 gerarFolhaDePagamento();
+//                 gerarFolhaDePagamento(); // Chama o método para gerar a folha ao clicar no botão
 //             }
 //         });
 
 //         exportarPDFButton.addActionListener(new ActionListener() {
 //             @Override
 //             public void actionPerformed(ActionEvent e) {
-//                 exportarParaPDF();
+//                 exportarParaPDF(); // Chama o método para exportar para PDF ao clicar no botão
 //             }
 //         });
 //     }
 
+//     // Método que retorna os meses do ano para o ComboBox de referência
 //     private String[] getMeses() {
-//         // Retorna os meses para o ComboBox de referência
 //         return new String[]{"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 //     }
 
+//     // Método que gera a folha de pagamento
 //     private void gerarFolhaDePagamento() {
 //         // Obtém o funcionário e o mês selecionado
-//         Funcionario funcionario = (Funcionario) funcionarioComboBox.getSelectedItem();
-//         String mesSelecionado = (String) mesReferenciaComboBox.getSelectedItem();
-//         LocalDate mesReferencia = LocalDate.now().withMonth(mesParaNumero(mesSelecionado));
+//         Funcionario funcionario = (Funcionario) funcionarioComboBox.getSelectedItem(); // Obtém o funcionário selecionado
+//         String mesSelecionado = (String) mesReferenciaComboBox.getSelectedItem(); // Obtém o mês selecionado
+//         LocalDate mesReferencia = LocalDate.now().withMonth(mesParaNumero(mesSelecionado)); // Obtém a data do mês de referência
 
 //         // Gera a folha de pagamento (exemplo de dados de ponto)
 //         try {
-//             FolhaPagamento folha = new FolhaPagamento(funcionario, mesReferencia, funcionario.getRegistrosDePonto());
+//             FolhaPagamento folha = new FolhaPagamento(funcionario, mesReferencia, funcionario.getRegistrosDePonto()); // Cria uma nova folha de pagamento
 
 //             // Exibe os resultados na área de texto
 //             resultadoArea.setText("Folha de Pagamento de " + funcionario.getNome() + ":\n");
@@ -108,10 +110,12 @@
 //             resultadoArea.append("Salário Líquido: " + folha.getSalarioLiquido() + "\n");
 
 //         } catch (Exception ex) {
+//             // Em caso de erro, exibe uma mensagem de erro
 //             JOptionPane.showMessageDialog(this, "Erro ao gerar folha de pagamento: " + ex.getMessage());
 //         }
 //     }
 
+//     // Método que converte o nome do mês para o número correspondente
 //     private int mesParaNumero(String mes) {
 //         switch (mes) {
 //             case "Janeiro":
@@ -139,13 +143,13 @@
 //             case "Dezembro":
 //                 return 12;
 //             default:
-//                 return 1;
+//                 return 1; // Retorna 1 como padrão caso o mês não seja reconhecido
 //         }
 //     }
 
+//     // Método para exportar os dados para PDF (exemplo de implementação futura)
 //     private void exportarParaPDF() {
-//         // Função para exportar os dados para PDF (exemplo de implementação futura)
-//         JOptionPane.showMessageDialog(this, "Exportação para PDF ainda não implementada.");
+//         JOptionPane.showMessageDialog(this, "Exportação para PDF ainda não implementada."); // Mensagem informando que a funcionalidade ainda não está implementada
 //     }
 
-// }
+// // }

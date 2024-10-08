@@ -2,99 +2,108 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Declaração do modelo POM utilizado (versão 4.0.0) -->
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.anthony.br</groupId>
-    <artifactId>projeto_gestao_rh</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <!-- Identificação do projeto -->
+    <groupId>com.anthony.br</groupId> <!-- Identifica o grupo do projeto, normalmente relacionado ao pacote base -->
+    <artifactId>projeto_gestao_rh</artifactId> <!-- Nome do artefato (projeto) -->
+    <version>1.0-SNAPSHOT</version> <!-- Versão do projeto, "SNAPSHOT" indica uma versão de desenvolvimento -->
 
+    <!-- Propriedades que definem a versão do compilador -->
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source> <!-- Define a versão do Java utilizada no projeto como 17 -->
+        <maven.compiler.target>17</maven.compiler.target> <!-- Define o alvo da compilação, que também será Java 17 -->
     </properties>
 
+    <!-- Dependências do projeto -->
     <dependencies>
 
+        <!-- Spring Boot Data JPA para simplificar o uso de JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.3.4</version>
+            <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- Starter do Spring Boot para JPA -->
+            <version>3.3.4</version> <!-- Versão do Spring Boot -->
         </dependency>
 
+        <!-- Driver PostgreSQL para conectar ao banco de dados -->
         <dependency>
             <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.4</version>
+            <artifactId>postgresql</artifactId> <!-- Driver do PostgreSQL -->
+            <version>42.7.4</version> <!-- Versão do driver PostgreSQL -->
         </dependency>
 
-        <!-- Dependência do JPA API -->
+        <!-- API de persistência JPA -->
         <dependency>
             <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-            <version>2.2</version>
+            <artifactId>javax.persistence-api</artifactId> <!-- Dependência para utilizar a API do JPA -->
+            <version>2.2</version> <!-- Versão da API JPA -->
         </dependency>
 
-        <!-- Hibernate -->
+        <!-- Hibernate Core -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.21.Final</version>
+            <artifactId>hibernate-core</artifactId> <!-- Dependência do Hibernate, que implementa JPA -->
+            <version>6.0.0.Final</version> <!-- Versão do Hibernate Core -->
         </dependency>
 
-        <!-- Dependência do PostgreSQL -->
+        <!-- Dependência duplicada de PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.23</version>
+            <version>42.2.23</version> <!-- Versão mais antiga do driver PostgreSQL (duplicada, uma versão mais nova já foi definida) -->
         </dependency>
 
-        <!-- Dependência de Testes -->
+        <!-- Dependência para testes com JUnit -->
         <dependency>
             <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
+            <artifactId>junit</artifactId> <!-- JUnit para testes unitários -->
+            <version>4.13.2</version> <!-- Versão do JUnit 4 -->
+            <scope>test</scope> <!-- Escopo de teste, será usada apenas para testes -->
         </dependency>
 
-         <!-- Hibernate Validator -->
-    <dependency>
-        <groupId>org.hibernate.validator</groupId>
-        <artifactId>hibernate-validator</artifactId>
-        <version>6.2.0.Final</version> <!-- Verifique a versão mais recente -->
-    </dependency>
+        <!-- Hibernate Validator para validação de entidades -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId> <!-- Validador de dados do Hibernate -->
+            <version>6.2.0.Final</version> <!-- Versão do Hibernate Validator -->
+        </dependency>
 
-    <!-- Dependência para a API de validação -->
-    <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>2.0.1.Final</version> <!-- Verifique a versão mais recente -->
-    </dependency>
+        <!-- API de validação -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId> <!-- API para validação de dados (Bean Validation) -->
+            <version>2.0.1.Final</version> <!-- Versão da API de validação -->
+        </dependency>
 
-    <!-- Dependência para o Java EE se necessário -->
-    <dependency>
-        <groupId>javax</groupId>
-        <artifactId>javaee-api</artifactId>
-        <version>7.0</version> <!-- Verifique a versão mais recente -->
-        <scope>provided</scope>
-    </dependency>
+        <!-- Dependência do Java EE, se necessário -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId> <!-- API Java EE, pode ser usada para integração de tecnologias Java EE -->
+            <version>7.0</version> <!-- Versão da API Java EE -->
+            <scope>provided</scope> <!-- Escopo 'provided', indicando que essa dependência não será empacotada com o projeto -->
+        </dependency>
 
+        <!-- iTextPDF para geração de documentos PDF -->
         <dependency>
             <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.5.13.2</version>
+            <artifactId>itextpdf</artifactId> <!-- iTextPDF para geração de arquivos PDF -->
+            <version>5.5.13.2</version> <!-- Versão da biblioteca iTextPDF -->
         </dependency>
+
     </dependencies>
 
-
+    <!-- Configuração de build do projeto -->
     <build>
         <plugins>
+            <!-- Plugin para compilar o código fonte Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <artifactId>maven-compiler-plugin</artifactId> <!-- Plugin para compilação -->
+                <version>3.8.1</version> <!-- Versão do plugin -->
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>11</source> <!-- Versão do Java para compilação (compatível com Java 11) -->
+                    <target>11</target> <!-- Versão do Java de destino da compilação -->
                 </configuration>
             </plugin>
         </plugins>
